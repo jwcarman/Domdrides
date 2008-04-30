@@ -127,10 +127,20 @@
 
     <distributionManagement>
         <site>
-            <id>sourceforge</id>
+            <id>domdrides-sourceforge-net</id>
             <name>SourceForge Site</name>
             <url>scp://shell.sourceforge.net/home/groups/d/do/domdrides/htdocs</url>
         </site>
+        <repository>
+            <id>domdrides-sourceforge-net</id>
+            <name>Domdrides Release</name>
+            <url>scp://shell.sf.net/home/groups/d/do/domdrides/htdocs/m2repo/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>domdrides-sourceforge-net</id>
+            <name>Domdrides Snapshot</name>
+            <url>scp://shell.sf.net/home/groups/d/do/domdrides/htdocs/m2repo/snapshots</url>
+        </snapshotRepository>
     </distributionManagement>
 
     <scm>
@@ -140,23 +150,23 @@
     </scm>
 
     <mailingLists>
-		<mailingList>
-			<name>Domdrides Users List</name>
-			<subscribe>http://lists.sourceforge.net/mailman/listinfo/domdrides-user</subscribe>
-			<unsubscribe>http://lists.sourceforge.net/mailman/listinfo/domdrides-user</unsubscribe>
-			<archive>http://sourceforge.net/mailarchive/forum.php?forum=domdrides-user</archive>
-		</mailingList>
         <mailingList>
-			<name>Domdrides Developers List</name>
+            <name>Domdrides Users List</name>
+            <subscribe>http://lists.sourceforge.net/mailman/listinfo/domdrides-user</subscribe>
+            <unsubscribe>http://lists.sourceforge.net/mailman/listinfo/domdrides-user</unsubscribe>
+            <archive>http://sourceforge.net/mailarchive/forum.php?forum=domdrides-user</archive>
+        </mailingList>
+        <mailingList>
+            <name>Domdrides Developers List</name>
             <subscribe>http://lists.sourceforge.net/mailman/listinfo/domdrides-developer</subscribe>
-			<unsubscribe>http://lists.sourceforge.net/mailman/listinfo/domdrides-developer</unsubscribe>
-			<archive>http://sourceforge.net/mailarchive/forum.php?forum=domdrides-developer</archive>
-		</mailingList>
+            <unsubscribe>http://lists.sourceforge.net/mailman/listinfo/domdrides-developer</unsubscribe>
+            <archive>http://sourceforge.net/mailarchive/forum.php?forum=domdrides-developer</archive>
+        </mailingList>
         <mailingList>
-			<name>Domdrides Commits List</name>
+            <name>Domdrides Commits List</name>
             <subscribe>http://lists.sourceforge.net/mailman/listinfo/domdrides-commits</subscribe>
-			<unsubscribe>http://lists.sourceforge.net/mailman/listinfo/domdrides-commits</unsubscribe>
-			<archive>http://sourceforge.net/mailarchive/forum.php?forum=domdrides-commits</archive>
-		</mailingList>
+            <unsubscribe>http://lists.sourceforge.net/mailman/listinfo/domdrides-commits</unsubscribe>
+            <archive>http://sourceforge.net/mailarchive/forum.php?forum=domdrides-commits</archive>
+        </mailingList>
     </mailingLists>
 </project>
