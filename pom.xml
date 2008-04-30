@@ -3,7 +3,7 @@
     <groupId>org.domdrides</groupId>
     <artifactId>domdrides</artifactId>
     <packaging>pom</packaging>
-    <version>1.0</version>
+    <version>1.1-SNAPSHOT</version>
     <name>domdrides</name>
     <description>Domain-Driven Design Library</description>
     <url>http://domdrides.sourceforge.net</url>
@@ -128,9 +128,9 @@
     </distributionManagement>
 
     <scm>
-        <connection>scm:svn:http://domdrides.svn.sourceforge.net/svnroot/domdrides/tags/domdrides-1.0</connection>
-        <developerConnection>scm:svn:https://domdrides.svn.sourceforge.net/svnroot/domdrides/tags/domdrides-1.0</developerConnection>
-        <url>http://domdrides.svn.sourceforge.net/viewvc/domdrides/tags/domdrides-1.0</url>
+        <connection>scm:svn:http://domdrides.svn.sourceforge.net/svnroot/domdrides/trunk</connection>
+        <developerConnection>scm:svn:https://domdrides.svn.sourceforge.net/svnroot/domdrides/trunk</developerConnection>
+        <url>http://domdrides.svn.sourceforge.net/viewvc/domdrides/trunk</url>
     </scm>
 
     <mailingLists>
