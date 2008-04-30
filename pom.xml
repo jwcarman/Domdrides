@@ -32,6 +32,7 @@
             <comments>A business-friendly OSS license</comments>
         </license>
     </licenses>
+    
     <modules>
         <module>core</module>
         <module>hibernate</module>
