@@ -111,17 +111,17 @@
 
     <distributionManagement>
         <site>
-            <id>domdrides-sourceforge-net</id>
+            <id>sourceforge.net</id>
             <name>SourceForge Site</name>
             <url>scp://shell.sourceforge.net/home/groups/d/do/domdrides/htdocs</url>
         </site>
         <repository>
-            <id>domdrides-sourceforge-net</id>
+            <id>sourceforge.net</id>
             <name>Domdrides Release</name>
             <url>scp://shell.sf.net/home/groups/d/do/domdrides/htdocs/m2repo/releases</url>
         </repository>
         <snapshotRepository>
-            <id>domdrides-sourceforge-net</id>
+            <id>sourceforge.net</id>
             <name>Domdrides Snapshot</name>
             <url>scp://shell.sf.net/home/groups/d/do/domdrides/htdocs/m2repo/snapshots</url>
         </snapshotRepository>
