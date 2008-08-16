@@ -16,6 +16,8 @@
 
 package org.domdrides.entity;
 
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import java.util.UUID;
 
 /**
@@ -25,6 +27,7 @@ import java.util.UUID;
  * @auothor James Carman
  * @since 1.0
  */
+@MappedSuperclass
 public class UuidEntity extends AbstractEntity<String>
 {
     public UuidEntity()
@@ -32,4 +35,14 @@ public class UuidEntity extends AbstractEntity<String>
         setId(UUID.randomUUID().toString());
     }
 
+    @Id
+    public String getId()
+    {
+        return super.getId();
+    }
+
+    protected void setId(String id)
+    {
+        super.setId(id);
+    }
 }
