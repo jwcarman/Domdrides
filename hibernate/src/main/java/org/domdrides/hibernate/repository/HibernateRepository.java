@@ -21,6 +21,7 @@ import org.domdrides.repository.Repository;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.Order;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,6 +42,7 @@ public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdT
 //**********************************************************************************************************************
 
     private final Class<EntityType> entityClass;
+    private static final String ASSOCIATION_ALIAS = "sp";
 
 //**********************************************************************************************************************
 // Constructors
@@ -51,9 +53,31 @@ public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdT
      *
      * @param entityClass the entity class
      */
-    protected HibernateRepository( Class<EntityType> entityClass )
+    protected HibernateRepository(Class<EntityType> entityClass)
     {
         this.entityClass = entityClass;
+    }
+
+    @Transactional(readOnly = true)
+    public List<EntityType> list(int first, int max, String sortProperty, boolean ascending)
+    {
+        Criteria c = createCriteria()
+                    .setMaxResults(max)
+                    .setFirstResult(first);
+        final int ndx = sortProperty.lastIndexOf('.');
+        if (ndx != -1)
+        {
+
+            final String associationPath = sortProperty.substring(0, ndx);
+            final String propertyName = sortProperty.substring(ndx + 1);
+            c = c.createAlias(associationPath, ASSOCIATION_ALIAS)
+                    .addOrder(ascending ? Order.asc(ASSOCIATION_ALIAS + "." + propertyName) : Order.desc(ASSOCIATION_ALIAS + "." + propertyName));
+        }
+        else
+        {
+            c = c.addOrder(ascending ? Order.asc(sortProperty) : Order.desc(sortProperty));
+        }
+        return list(c);
     }
 
 //**********************************************************************************************************************
@@ -61,38 +85,38 @@ public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdT
 //**********************************************************************************************************************
 
     @Transactional()
-    public EntityType add( EntityType entity )
+    public EntityType add(EntityType entity)
     {
         getSession().save(entity);
         return entity;
     }
 
-    @Transactional( readOnly = true )
-    public boolean contains( EntityType entity )
+    @Transactional(readOnly = true)
+    public boolean contains(EntityType entity)
     {
         return getSession(false).get(entityClass, entity.getId()) != null;
     }
 
-    @Transactional( readOnly = true )
+    @Transactional(readOnly = true)
     public Set<EntityType> getAll()
     {
         return set(createCriteria());
     }
 
-    @Transactional( readOnly = true )
-    public EntityType getById( IdType id )
+    @Transactional(readOnly = true)
+    public EntityType getById(IdType id)
     {
         return uniqueResult(createCriteria().add(Restrictions.eq("id", id)));
     }
 
     @Transactional
-    public void remove( EntityType entity )
+    public void remove(EntityType entity)
     {
         getSession().delete(entity);
     }
 
     @Transactional
-    public EntityType update( EntityType entity )
+    public EntityType update(EntityType entity)
     {
         getSession().update(entity);
         return entity;
@@ -108,9 +132,9 @@ public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdT
      * @param criteria the criteria
      * @return a list of entities based on the provided criteria
      */
-    @SuppressWarnings( "unchecked" )
-    @Transactional( readOnly = true )
-    protected List<EntityType> list( Criteria criteria )
+    @SuppressWarnings("unchecked")
+    @Transactional(readOnly = true)
+    protected List<EntityType> list(Criteria criteria)
     {
         return new ArrayList<EntityType>(criteria.list());
     }
@@ -121,9 +145,9 @@ public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdT
      * @param query the query
      * @return a list of entities based on the provided query
      */
-    @SuppressWarnings( "unchecked" )
-    @Transactional( readOnly = true )
-    protected List<EntityType> list( Query query )
+    @SuppressWarnings("unchecked")
+    @Transactional(readOnly = true)
+    protected List<EntityType> list(Query query)
     {
         return new ArrayList<EntityType>(query.list());
     }
@@ -134,9 +158,9 @@ public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdT
      * @param criteria the criteria
      * @return a set of entities based on the provided criteria
      */
-    @SuppressWarnings( "unchecked" )
-    @Transactional( readOnly = true )
-    protected Set<EntityType> set( Criteria criteria )
+    @SuppressWarnings("unchecked")
+    @Transactional(readOnly = true)
+    protected Set<EntityType> set(Criteria criteria)
     {
         return new HashSet<EntityType>(criteria.list());
     }
@@ -147,9 +171,9 @@ public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdT
      * @param query the query
      * @return a set of entities based on the provided query
      */
-    @SuppressWarnings( "unchecked" )
-    @Transactional( readOnly = true )
-    protected Set<EntityType> set( Query query )
+    @SuppressWarnings("unchecked")
+    @Transactional(readOnly = true)
+    protected Set<EntityType> set(Query query)
     {
         return new HashSet<EntityType>(query.list());
     }
@@ -160,8 +184,8 @@ public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdT
      * @param criteria the criteria
      * @return a unique result based on the provided criteria
      */
-    @Transactional( readOnly = true )
-    protected EntityType uniqueResult( Criteria criteria )
+    @Transactional(readOnly = true)
+    protected EntityType uniqueResult(Criteria criteria)
     {
         return entityClass.cast(criteria.uniqueResult());
     }
@@ -172,8 +196,8 @@ public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdT
      * @param query the query
      * @return a unique result based on the provided query
      */
-    @Transactional( readOnly = true )
-    protected EntityType uniqueResult( Query query )
+    @Transactional(readOnly = true)
+    protected EntityType uniqueResult(Query query)
     {
         return entityClass.cast(query.uniqueResult());
     }
