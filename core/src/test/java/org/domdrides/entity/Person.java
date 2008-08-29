@@ -19,6 +19,7 @@ package org.domdrides.entity;
 /**
  * @author James Carman
  */
+@javax.persistence.Entity
 public class Person extends UuidEntity
 {
 //**********************************************************************************************************************

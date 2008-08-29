@@ -43,7 +43,7 @@
         <module>wicket</module>
     </modules>
     <properties>
-        <hibernate.version>3.2.5.ga</hibernate.version>
+        <hibernate.version>3.2.6.ga</hibernate.version>
         <spring.version>2.5.2</spring.version>
         <ibatis.version>2.3.0</ibatis.version>
     </properties>
