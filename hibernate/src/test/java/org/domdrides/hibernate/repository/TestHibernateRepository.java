@@ -17,7 +17,6 @@
 package org.domdrides.hibernate.repository;
 
 import org.domdrides.entity.Person;
-import org.domdrides.repository.PageableRepository;
 import org.domdrides.repository.PageableRepositoryTestCase;
 import org.springframework.test.context.ContextConfiguration;
 import static org.testng.Assert.assertSame;
@@ -70,11 +69,4 @@ public class TestHibernateRepository extends PageableRepositoryTestCase
         assertSame(actual, expected);
     }
 
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testListWithNestedPropertySort()
-    {
-        ((PageableRepository<Person,String>)personRepository).list(0, 10, "spouse.last", true);
-        ((PageableRepository<Person,String>)personRepository).list(0, 10, "spouse.first", false);
-    }
 }

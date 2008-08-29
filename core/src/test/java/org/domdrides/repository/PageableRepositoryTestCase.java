@@ -62,4 +62,12 @@ public abstract class PageableRepositoryTestCase extends RepositoryTestCase
             assertCollectionsSame(expected, actual);
         }
     }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testListWithNestedPropertySort()
+    {
+        ((PageableRepository<Person,String>)personRepository).list(0, 10, "spouse.last", true);
+        ((PageableRepository<Person,String>)personRepository).list(0, 10, "spouse.first", false);
+    }
 }

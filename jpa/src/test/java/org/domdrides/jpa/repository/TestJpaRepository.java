@@ -16,14 +16,14 @@
 
 package org.domdrides.jpa.repository;
 
+import org.domdrides.repository.PageableRepositoryTestCase;
 import org.springframework.test.context.ContextConfiguration;
-import org.domdrides.repository.RepositoryTestCase;
 
 /**
  * @author James Carman
  * @since 1.0
  */
 @ContextConfiguration( locations = "TestJpaRepository.xml" )
-public class TestJpaRepository extends RepositoryTestCase
+public class TestJpaRepository extends PageableRepositoryTestCase
 {
 }

@@ -16,6 +16,8 @@
 
 package org.domdrides.entity;
 
+import javax.persistence.ManyToOne;
+
 /**
  * @author James Carman
  */
@@ -29,10 +31,22 @@ public class Person extends UuidEntity
     private String ssn;
     private String first;
     private String last;
+    private Person spouse;
 
 //**********************************************************************************************************************
 // Getter/Setter Methods
 //**********************************************************************************************************************
+
+    @ManyToOne
+    public Person getSpouse()
+    {
+        return spouse;
+    }
+
+    public void setSpouse(Person spouse)
+    {
+        this.spouse = spouse;
+    }
 
     public String getFirst()
     {

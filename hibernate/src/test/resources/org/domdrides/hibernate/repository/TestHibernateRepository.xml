@@ -47,7 +47,7 @@
         </property>
         
         <property name="mappingLocations"
-                  value="classpath:/org/domdrides/hibernate/entity/MarriedPerson.hbm.xml"/>
+                  value="classpath:/org/domdrides/hibernate/entity/Person.hbm.xml"/>
     </bean>
 
 
