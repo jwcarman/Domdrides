@@ -139,6 +139,13 @@ public abstract class RepositoryTestCase extends AbstractTransactionalTestNGSpri
         assertEquals("Black", queried.getLast());
     }
 
+    @Test
+    public void testSize()
+    {
+        addPersonsToRepository(10);
+        assertEquals(personRepository.size(), 10);
+    }
+    
     protected void assertCollectionsSame( Collection<Person> expected, Collection<Person> actual )
     {
         assertEquals(createSortedPersonList(expected), createSortedPersonList(actual));

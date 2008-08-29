@@ -22,6 +22,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -130,6 +131,12 @@ public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdT
         return entity;
     }
 
+    @Transactional(readOnly = true)
+    public int size()
+    {
+        return ((Number)createCriteria().setProjection(Projections.count("id")).uniqueResult()).intValue();
+    }
+    
 //**********************************************************************************************************************
 // Other Methods
 //**********************************************************************************************************************
