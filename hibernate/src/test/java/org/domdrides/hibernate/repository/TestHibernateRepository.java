@@ -24,7 +24,7 @@ import static org.testng.Assert.assertSame;
 import org.testng.annotations.Test;
 
 /**
- * @auothor James Carman
+ *
  */
 @ContextConfiguration(locations = "TestHibernateRepository.xml")
 public class TestHibernateRepository extends PageableRepositoryTestCase
@@ -74,6 +74,7 @@ public class TestHibernateRepository extends PageableRepositoryTestCase
     @SuppressWarnings("unchecked")
     public void testListWithNestedPropertySort()
     {
-        ((PageableRepository<Person,String>)personRepository).list(0, 10, "spouse.last", true);    
+        ((PageableRepository<Person,String>)personRepository).list(0, 10, "spouse.last", true);
+        ((PageableRepository<Person,String>)personRepository).list(0, 10, "spouse.first", false);
     }
 }

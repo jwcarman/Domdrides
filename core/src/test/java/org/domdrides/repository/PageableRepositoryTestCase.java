@@ -26,7 +26,7 @@ import java.util.Comparator;
 /**
  * A test harness to test the {@link PageableRepository} "contract"
  *
- * @auothor James Carman
+ *
  */
 
 public abstract class PageableRepositoryTestCase extends RepositoryTestCase
@@ -45,10 +45,19 @@ public abstract class PageableRepositoryTestCase extends RepositoryTestCase
                 return o1.getLast().compareTo(o2.getLast());
             }
         });
+        // Test ascending sorts...
         final PageableRepository<Person,String> pageablePersonRepository = (PageableRepository<Person,String>)personRepository;
         for(int pageNumber = 0; pageNumber < nPages; ++pageNumber)
         {
             final List<Person> actual = pageablePersonRepository.list(pageNumber * pageSize, pageSize, "last", true);
+            final List<Person> expected = allPeople.subList(pageNumber * pageSize, (pageNumber + 1) * pageSize);
+            assertCollectionsSame(expected, actual);
+        }
+        // Test descending sorts too...
+        Collections.reverse(allPeople);
+        for(int pageNumber = 0; pageNumber < nPages; ++pageNumber)
+        {
+            final List<Person> actual = pageablePersonRepository.list(pageNumber * pageSize, pageSize, "last", false);
             final List<Person> expected = allPeople.subList(pageNumber * pageSize, (pageNumber + 1) * pageSize);
             assertCollectionsSame(expected, actual);
         }

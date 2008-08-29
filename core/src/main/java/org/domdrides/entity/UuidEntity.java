@@ -24,7 +24,7 @@ import java.util.UUID;
  * An entity class that uses a {@link UUID}'s String value as
  * its id.
  *
- * @auothor James Carman
+ *
  * @since 1.0
  */
 @MappedSuperclass

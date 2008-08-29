@@ -32,7 +32,7 @@ import java.util.Map;
 
 /**
  * @goal generate-repository
- * @auothor James Carman
+ *
  */
 public class GenerateRepositoryMojo extends AbstractGeneratorMojo
 {

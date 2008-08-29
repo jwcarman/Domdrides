@@ -35,7 +35,7 @@ import java.util.List;
 /**
  * A test harness to test the {@link Repository} "contract"
  * 
- * @auothor James Carman
+ *
  */
 public abstract class RepositoryTestCase extends AbstractTransactionalTestNGSpringContextTests
 {

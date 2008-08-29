@@ -22,7 +22,7 @@ import org.apache.velocity.VelocityContext;
 
 /**
  * @goal generate-entity
- * @auothor James Carman
+ *
  */
 public class GenerateEntityMojo extends AbstractGeneratorMojo
 {

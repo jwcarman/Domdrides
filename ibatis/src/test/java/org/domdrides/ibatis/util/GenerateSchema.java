@@ -19,7 +19,7 @@ package org.domdrides.ibatis.util;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 /**
- * @auothor James Carman
+ *
  */
 public class GenerateSchema extends JdbcDaoSupport
 {

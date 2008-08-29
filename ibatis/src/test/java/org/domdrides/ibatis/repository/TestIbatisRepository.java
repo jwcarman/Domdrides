@@ -20,7 +20,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.domdrides.repository.RepositoryTestCase;
 
 /**
- * @auothor James Carman
+ *
  */
 @ContextConfiguration( locations = "TestIbatisRepository.xml" )
 public class TestIbatisRepository extends RepositoryTestCase
