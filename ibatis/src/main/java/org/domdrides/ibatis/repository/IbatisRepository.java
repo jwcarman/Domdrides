@@ -28,7 +28,7 @@ import java.util.Set;
 /**
  * An <a href="http://ibatis.apache.org">iBATIS</a>-based repository implementation
  *  
- * @auothor James Carman
+ *
  */
 public class IbatisRepository<EntityType extends Entity<IdType>, IdType extends Serializable> extends
         SqlMapClientDaoSupport implements Repository<EntityType, IdType>
@@ -42,6 +42,7 @@ public class IbatisRepository<EntityType extends Entity<IdType>, IdType extends 
     private String getByIdId;
     private String removeId;
     private String updateId;
+    private String sizeId;
 
 //**********************************************************************************************************************
 // Constructors
@@ -55,6 +56,7 @@ public class IbatisRepository<EntityType extends Entity<IdType>, IdType extends 
         this.updateId = simpleName + ".update";
         this.getByIdId = simpleName + ".getById";
         this.getAllId = simpleName + ".getAll";
+        this.sizeId = simpleName + ".size";
     }
 
 //**********************************************************************************************************************
@@ -101,9 +103,25 @@ public class IbatisRepository<EntityType extends Entity<IdType>, IdType extends 
         return entity;
     }
 
+    @Transactional(readOnly = true)
+    public int size()
+    {
+        return ((Number)getSqlMapClientTemplate().queryForObject(sizeId)).intValue();
+    }
+
 //**********************************************************************************************************************
 // Getter/Setter Methods
 //**********************************************************************************************************************
+
+    public String getSizeId()
+    {
+        return sizeId;
+    }
+
+    public void setSizeId(String sizeId)
+    {
+        this.sizeId = sizeId;
+    }
 
     public String getAddId()
     {

@@ -17,11 +17,12 @@
 package org.domdrides.hibernate.repository;
 
 import org.domdrides.entity.Entity;
-import org.domdrides.repository.Repository;
+import org.domdrides.repository.PageableRepository;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,7 +36,7 @@ import java.util.Set;
  * @author James Carman
  * @since 1.0
  */
-public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdType extends Serializable> extends HibernateDaoSupport implements Repository<EntityType, IdType>
+public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdType extends Serializable> extends HibernateDaoSupport implements PageableRepository<EntityType, IdType>
 {
 //**********************************************************************************************************************
 // Fields
@@ -58,6 +59,14 @@ public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdT
         this.entityClass = entityClass;
     }
 
+    /**
+     * Returns one page of data from this repository.
+     * @param first the first entity to return
+     * @param max the maximum number of entities to return
+     * @param sortProperty the property to sort by
+     * @param ascending whether or not the sorting is asceding
+     * @return one page of data from this repository
+     */
     @Transactional(readOnly = true)
     public List<EntityType> list(int first, int max, String sortProperty, boolean ascending)
     {
@@ -67,7 +76,6 @@ public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdT
         final int ndx = sortProperty.lastIndexOf('.');
         if (ndx != -1)
         {
-
             final String associationPath = sortProperty.substring(0, ndx);
             final String propertyName = sortProperty.substring(ndx + 1);
             c = c.createAlias(associationPath, ASSOCIATION_ALIAS)
@@ -122,6 +130,12 @@ public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdT
         return entity;
     }
 
+    @Transactional(readOnly = true)
+    public int size()
+    {
+        return ((Number)createCriteria().setProjection(Projections.count("id")).uniqueResult()).intValue();
+    }
+    
 //**********************************************************************************************************************
 // Other Methods
 //**********************************************************************************************************************

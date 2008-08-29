@@ -20,7 +20,7 @@ import org.domdrides.entity.Person;
 import org.domdrides.repository.PersonRepository;
 
 /**
- * @auothor James Carman
+ *
  */
 public class IbatisPersonRepository extends IbatisRepository<Person, String> implements PersonRepository
 {

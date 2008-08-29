@@ -34,7 +34,7 @@ import java.net.MalformedURLException;
 
 /**
  * @requiresDependencyResolution runtime
- * @auothor James Carman
+ *
  */
 public abstract class AbstractGeneratorMojo extends AbstractMojo
 {

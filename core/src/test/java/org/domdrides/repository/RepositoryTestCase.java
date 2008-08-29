@@ -35,7 +35,7 @@ import java.util.List;
 /**
  * A test harness to test the {@link Repository} "contract"
  * 
- * @auothor James Carman
+ *
  */
 public abstract class RepositoryTestCase extends AbstractTransactionalTestNGSpringContextTests
 {
@@ -43,7 +43,7 @@ public abstract class RepositoryTestCase extends AbstractTransactionalTestNGSpri
 // Fields
 //**********************************************************************************************************************
 
-    private PersonRepository personRepository;
+    protected PersonRepository personRepository;
 
 //**********************************************************************************************************************
 // Getter/Setter Methods
@@ -139,7 +139,14 @@ public abstract class RepositoryTestCase extends AbstractTransactionalTestNGSpri
         assertEquals("Black", queried.getLast());
     }
 
-    private void assertCollectionsSame( Collection<Person> expected, Collection<Person> actual )
+    @Test
+    public void testSize()
+    {
+        addPersonsToRepository(10);
+        assertEquals(personRepository.size(), 10);
+    }
+    
+    protected void assertCollectionsSame( Collection<Person> expected, Collection<Person> actual )
     {
         assertEquals(createSortedPersonList(expected), createSortedPersonList(actual));
     }

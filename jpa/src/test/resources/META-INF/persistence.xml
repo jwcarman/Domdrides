@@ -22,7 +22,7 @@
              version="1.0">
 
     <persistence-unit name="domdrides" transaction-type="RESOURCE_LOCAL">
-        <!--<class>org.domdrides.entity.Person</class>-->
+        <class>org.domdrides.entity.Person</class>
     </persistence-unit>
 
 </persistence>

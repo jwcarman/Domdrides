@@ -24,20 +24,24 @@
                            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
                            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
 
+    <tx:annotation-driven transaction-manager="transactionManager"/>
 
-    <bean id="entityManagerFactory"
-          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
                 <property name="database" value="HSQL"/>
                 <property name="showSql" value="false"/>
-                <property name="generateDdl" value="true" />
+                <property name="generateDdl" value="true"/>
             </bean>
         </property>
+        <property name="persistenceXmlLocation" value="classpath:/META-INF/persistence.xml"/>
     </bean>
-
-    <tx:annotation-driven transaction-manager="transactionManager" />
 
     <bean id="dataSource"
           class="org.apache.commons.dbcp.BasicDataSource"
@@ -47,14 +51,6 @@
         <property name="username" value="sa"/>
         <property name="password" value=""/>
     </bean>
-
-    <bean id="transactionManager"
-        class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory"
-            ref="entityManagerFactory" />
-    </bean>
-
-    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
 
     <bean id="personRepository" class="org.domdrides.jpa.repository.JpaPersonRepository">
         <property name="entityManagerFactory" ref="entityManagerFactory"/>

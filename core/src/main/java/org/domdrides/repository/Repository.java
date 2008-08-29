@@ -80,4 +80,10 @@ public interface Repository<EntityType extends Entity<IdType>, IdType extends Se
      * @return the entity (useful if adding entity to repository changes the entity, e.g. creates oid)
      */
     public EntityType update( EntityType entity );
+
+    /**
+     * Returns the size of the repository.
+     * @return the size of the repository
+     */
+    public int size();
 }

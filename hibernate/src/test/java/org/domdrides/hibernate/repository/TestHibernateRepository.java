@@ -16,19 +16,65 @@
 
 package org.domdrides.hibernate.repository;
 
-import org.domdrides.repository.RepositoryTestCase;
+import org.domdrides.entity.Person;
+import org.domdrides.repository.PageableRepository;
+import org.domdrides.repository.PageableRepositoryTestCase;
 import org.springframework.test.context.ContextConfiguration;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertNull;
-import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.assertSame;
+import org.testng.annotations.Test;
 
 /**
- * @auothor James Carman
+ *
  */
-@ContextConfiguration( locations = "TestHibernateRepository.xml" )
-public class TestHibernateRepository extends RepositoryTestCase
+@ContextConfiguration(locations = "TestHibernateRepository.xml")
+public class TestHibernateRepository extends PageableRepositoryTestCase
 {
+    @Test
+    public void testGetAllAsSetByQuery()
+    {
+        ExtendedPersonRepository repo = (ExtendedPersonRepository) personRepository;
+        repo.getAllAsSetByQuery();
+    }
 
+    @Test
+    public void testGetAllAsListByQuery()
+    {
+        ExtendedPersonRepository repo = (ExtendedPersonRepository) personRepository;
+        repo.getAllAsListByQuery();
+    }
+
+    @Test
+    public void testGetAllAsSetByCriteria()
+    {
+        ExtendedPersonRepository repo = (ExtendedPersonRepository) personRepository;
+        repo.getAllAsSetByCriteria();
+    }
+
+    @Test
+    public void testGetAllAsListByCriteria()
+    {
+        ExtendedPersonRepository repo = (ExtendedPersonRepository) personRepository;
+        repo.getAllAsListByCriteria();
+    }
+
+    @Test
+    public void teetGetByIdUsingQuery()
+    {
+        ExtendedPersonRepository repo = (ExtendedPersonRepository) personRepository;
+        final Person expected = new Person();
+        expected.setFirst("Slappy");
+        expected.setLast("White");
+        expected.setSsn("123-45-6789");
+        repo.add(expected);
+        final Person actual = repo.getByIdUsingQuery(expected.getId());
+        assertSame(actual, expected);
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testListWithNestedPropertySort()
+    {
+        ((PageableRepository<Person,String>)personRepository).list(0, 10, "spouse.last", true);
+        ((PageableRepository<Person,String>)personRepository).list(0, 10, "spouse.first", false);
+    }
 }

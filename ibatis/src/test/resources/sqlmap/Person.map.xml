@@ -64,5 +64,10 @@
     <update id="update" parameterMap="person_update" parameterClass="org.domdrides.entity.Person">
         UPDATE person set id = ?, first = ?, last = ?, ssn = ? where id = ?
     </update>
+
+    <select id="size" resultClass="Integer">
+        SELECT count(*) from person
+    </select>
+
 </sqlMap>
 

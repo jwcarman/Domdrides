@@ -19,12 +19,17 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="org.domdrides.entity.Person">
+    <class name="org.domdrides.entity.Person" discriminator-value="Person">
         <id name="id" type="string">
             <generator class="assigned"/>
         </id>
+        <discriminator type="string"/>
+
         <property name="ssn"/>
         <property name="first"/>
         <property name="last"/>
+        <subclass name="org.domdrides.hibernate.entity.MarriedPerson" discriminator-value="MarriedPerson">
+            <many-to-one name="spouse" />
+        </subclass>
     </class>
 </hibernate-mapping>

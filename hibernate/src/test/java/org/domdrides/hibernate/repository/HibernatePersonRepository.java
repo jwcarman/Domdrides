@@ -17,7 +17,6 @@
 package org.domdrides.hibernate.repository;
 
 import org.domdrides.entity.Person;
-import org.domdrides.repository.PersonRepository;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +27,7 @@ import java.util.Set;
 /**
  * @author James Carman
  */
-public class HibernatePersonRepository extends HibernateRepository<Person, String> implements PersonRepository
+public class HibernatePersonRepository extends HibernateRepository<Person, String> implements ExtendedPersonRepository
 {
 //**********************************************************************************************************************
 // Constructors
@@ -43,40 +42,41 @@ public class HibernatePersonRepository extends HibernateRepository<Person, Strin
 // PersonRepository Implementation
 //**********************************************************************************************************************
 
-
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Person> getAllAsListByCriteria()
     {
         final Criteria criteria = createCriteria();
         return list(criteria);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Person> getAllAsListByQuery()
     {
         final Query q = getSession(false).createQuery("select x from Person x");
         return list(q);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Set<Person> getAllAsSetByCriteria()
     {
         final Criteria criteria = createCriteria();
         return set(criteria);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Set<Person> getAllAsSetByQuery()
     {
         final Query q = getSession(false).createQuery("select x from Person x");
         return set(q);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Person getByIdUsingQuery( String id )
     {
         final Query q = getSession(false).createQuery("select x from Person x where x.id = :id");
         q.setString("id", id);
         return uniqueResult(q);
     }
+
+
 }
