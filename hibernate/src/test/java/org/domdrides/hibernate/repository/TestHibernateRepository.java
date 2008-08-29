@@ -17,13 +17,64 @@
 package org.domdrides.hibernate.repository;
 
 import org.domdrides.repository.PageableRepositoryTestCase;
+import org.domdrides.repository.PageableRepository;
+import org.domdrides.entity.Person;
 import org.springframework.test.context.ContextConfiguration;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
+
+import java.util.List;
 
 /**
  * @auothor James Carman
  */
-@ContextConfiguration( locations = "TestHibernateRepository.xml" )
+@ContextConfiguration(locations = "TestHibernateRepository.xml")
 public class TestHibernateRepository extends PageableRepositoryTestCase
 {
+    @Test
+    public void testGetAllAsSetByQuery()
+    {
+        ExtendedPersonRepository repo = (ExtendedPersonRepository) personRepository;
+        repo.getAllAsSetByQuery();
+    }
 
+    @Test
+    public void testGetAllAsListByQuery()
+    {
+        ExtendedPersonRepository repo = (ExtendedPersonRepository) personRepository;
+        repo.getAllAsListByQuery();
+    }
+
+    @Test
+    public void testGetAllAsSetByCriteria()
+    {
+        ExtendedPersonRepository repo = (ExtendedPersonRepository) personRepository;
+        repo.getAllAsSetByCriteria();
+    }
+
+    @Test
+    public void testGetAllAsListByCriteria()
+    {
+        ExtendedPersonRepository repo = (ExtendedPersonRepository) personRepository;
+        repo.getAllAsListByCriteria();
+    }
+
+    @Test
+    public void teetGetByIdUsingQuery()
+    {
+        ExtendedPersonRepository repo = (ExtendedPersonRepository) personRepository;
+        final Person expected = new Person();
+        expected.setFirst("Slappy");
+        expected.setLast("White");
+        expected.setSsn("123-45-6789");
+        repo.add(expected);
+        final Person actual = repo.getByIdUsingQuery(expected.getId());
+        assertSame(actual, expected);
+    }
+
+    @Test
+    public void testListWithNestedPropertySort()
+    {
+        ((PageableRepository<Person,String>)personRepository).list(0, 10, "spouse.last", true);    
+    }
 }

@@ -45,8 +45,9 @@
                 hibernate.hbm2ddl.auto=update
             </value>
         </property>
+        
         <property name="mappingLocations"
-                  value="classpath:/org/domdrides/hibernate/entity/Person.hbm.xml"/>
+                  value="classpath:/org/domdrides/hibernate/entity/MarriedPerson.hbm.xml"/>
     </bean>
 
 

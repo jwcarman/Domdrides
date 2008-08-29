@@ -17,7 +17,6 @@
 package org.domdrides.hibernate.repository;
 
 import org.domdrides.entity.Person;
-import org.domdrides.repository.PersonRepository;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +27,7 @@ import java.util.Set;
 /**
  * @author James Carman
  */
-public class HibernatePersonRepository extends HibernateRepository<Person, String> implements PersonRepository
+public class HibernatePersonRepository extends HibernateRepository<Person, String> implements ExtendedPersonRepository
 {
 //**********************************************************************************************************************
 // Constructors

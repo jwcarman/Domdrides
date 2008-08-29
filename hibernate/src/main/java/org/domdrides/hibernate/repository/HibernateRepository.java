@@ -76,7 +76,6 @@ public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdT
         final int ndx = sortProperty.lastIndexOf('.');
         if (ndx != -1)
         {
-
             final String associationPath = sortProperty.substring(0, ndx);
             final String propertyName = sortProperty.substring(ndx + 1);
             c = c.createAlias(associationPath, ASSOCIATION_ALIAS)
