@@ -17,7 +17,7 @@
 package org.domdrides.hibernate.repository;
 
 import org.domdrides.entity.Entity;
-import org.domdrides.repository.Repository;
+import org.domdrides.repository.PageableRepository;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
@@ -35,7 +35,7 @@ import java.util.Set;
  * @author James Carman
  * @since 1.0
  */
-public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdType extends Serializable> extends HibernateDaoSupport implements Repository<EntityType, IdType>
+public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdType extends Serializable> extends HibernateDaoSupport implements PageableRepository<EntityType, IdType>
 {
 //**********************************************************************************************************************
 // Fields
@@ -58,6 +58,14 @@ public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdT
         this.entityClass = entityClass;
     }
 
+    /**
+     * Returns one page of data from this repository.
+     * @param first the first entity to return
+     * @param max the maximum number of entities to return
+     * @param sortProperty the property to sort by
+     * @param ascending whether or not the sorting is asceding
+     * @return one page of data from this repository
+     */
     @Transactional(readOnly = true)
     public List<EntityType> list(int first, int max, String sortProperty, boolean ascending)
     {

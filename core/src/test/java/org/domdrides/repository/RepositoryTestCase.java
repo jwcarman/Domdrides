@@ -43,7 +43,7 @@ public abstract class RepositoryTestCase extends AbstractTransactionalTestNGSpri
 // Fields
 //**********************************************************************************************************************
 
-    private PersonRepository personRepository;
+    protected PersonRepository personRepository;
 
 //**********************************************************************************************************************
 // Getter/Setter Methods
@@ -139,7 +139,7 @@ public abstract class RepositoryTestCase extends AbstractTransactionalTestNGSpri
         assertEquals("Black", queried.getLast());
     }
 
-    private void assertCollectionsSame( Collection<Person> expected, Collection<Person> actual )
+    protected void assertCollectionsSame( Collection<Person> expected, Collection<Person> actual )
     {
         assertEquals(createSortedPersonList(expected), createSortedPersonList(actual));
     }

@@ -14,16 +14,35 @@
  * limitations under the License.
  */
 
-package org.domdrides.hibernate.repository;
+package org.domdrides.example.entity;
 
-import org.domdrides.repository.PageableRepositoryTestCase;
-import org.springframework.test.context.ContextConfiguration;
+import org.domdrides.entity.UuidEntity;
 
-/**
- * @auothor James Carman
- */
-@ContextConfiguration( locations = "TestHibernateRepository.xml" )
-public class TestHibernateRepository extends PageableRepositoryTestCase
+import javax.persistence.Entity;
+
+@Entity
+public class Person extends UuidEntity
 {
+    private String firstName;
+    private String lastName;
 
+    public String getFirstName()
+    {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName)
+    {
+        this.firstName = firstName;
+    }
+
+    public String getLastName()
+    {
+        return lastName;
+    }
+
+    public void setLastName(String lastName)
+    {
+        this.lastName = lastName;
+    }
 }

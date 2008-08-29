@@ -14,16 +14,15 @@
  * limitations under the License.
  */
 
-package org.domdrides.hibernate.repository;
+package org.domdrides.example.repository;
 
-import org.domdrides.repository.PageableRepositoryTestCase;
-import org.springframework.test.context.ContextConfiguration;
+import org.domdrides.example.entity.Person;
+import org.domdrides.repository.Repository;
 
 /**
- * @auothor James Carman
+ * A repository for {@link Person} objects.
  */
-@ContextConfiguration( locations = "TestHibernateRepository.xml" )
-public class TestHibernateRepository extends PageableRepositoryTestCase
+public interface PersonRepository extends Repository<Person,String>
 {
 
 }
