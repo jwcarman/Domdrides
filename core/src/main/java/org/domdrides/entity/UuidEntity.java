@@ -28,7 +28,7 @@ import java.util.UUID;
  * @since 1.0
  */
 @MappedSuperclass
-public class UuidEntity extends AbstractEntity<String>
+public abstract class UuidEntity extends AbstractEntity<String>
 {
     public UuidEntity()
     {
