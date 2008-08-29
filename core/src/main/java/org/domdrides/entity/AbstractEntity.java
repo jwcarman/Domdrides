@@ -16,7 +16,6 @@
 
 package org.domdrides.entity;
 
-import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 
 /**
