@@ -21,8 +21,8 @@
     <artifactId>domdrides</artifactId>
     <packaging>pom</packaging>
     <version>1.2-SNAPSHOT</version>
-    <name>domdrides</name>
-    <description>Domain-Driven Design Library</description>
+    <name>Domdrides</name>
+    <description>A DOMain-DRIven DESign Library for Java</description>
     <url>http://domdrides.sourceforge.net</url>
     <licenses>
         <license>
