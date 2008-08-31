@@ -33,6 +33,8 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * A <a href="http://www.hibernate.org">Hibernate</a>-based repository implementation.
+ * 
  * @author James Carman
  * @since 1.0
  */

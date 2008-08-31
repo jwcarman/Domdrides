@@ -28,7 +28,7 @@ import java.util.Set;
 /**
  * An <a href="http://ibatis.apache.org">iBATIS</a>-based repository implementation
  *  
- *
+ * @since 1.0
  */
 public class IbatisRepository<EntityType extends Entity<IdType>, IdType extends Serializable> extends
         SqlMapClientDaoSupport implements Repository<EntityType, IdType>

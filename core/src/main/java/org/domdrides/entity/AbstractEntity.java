@@ -19,7 +19,8 @@ package org.domdrides.entity;
 import java.io.Serializable;
 
 /**
- * A useful superclass for implementing persistent entity classes.
+ * A useful superclass for implementing persistent entity classes.  The {@link #equals(Object)} and {@link #hashCode()}
+ * methods are based solely on the id value and not upon any "business" properties.  
  *
  * @author James Carman
  * @since 1.0
@@ -30,6 +31,7 @@ public abstract class AbstractEntity<IdType extends Serializable> implements Ent
 // Fields
 //**********************************************************************************************************************
 
+    private static final long serialVersionUID = -4570499400476247966L;
     private IdType id;
 
 //**********************************************************************************************************************
@@ -42,6 +44,29 @@ public abstract class AbstractEntity<IdType extends Serializable> implements Ent
 
 //**********************************************************************************************************************
 // Entity Implementation
+//**********************************************************************************************************************
+
+    public IdType getId()
+    {
+        return id;
+    }
+
+    public int hashCode()
+    {
+        return ( id != null ? id.hashCode() : 0 );
+    }
+
+//**********************************************************************************************************************
+// Getter/Setter Methods
+//**********************************************************************************************************************
+
+    protected void setId( IdType id )
+    {
+        this.id = id;
+    }
+
+//**********************************************************************************************************************
+// Canonical Methods
 //**********************************************************************************************************************
 
     public boolean equals( Object o )
@@ -58,28 +83,5 @@ public abstract class AbstractEntity<IdType extends Serializable> implements Ent
         AbstractEntity that = ( AbstractEntity ) o;
 
         return !( id != null ? !id.equals(that.id) : that.id != null );
-    }
-
-    public IdType getId()
-    {
-        return id;
-    }
-
-//**********************************************************************************************************************
-// Getter/Setter Methods
-//**********************************************************************************************************************
-
-    protected void setId( IdType id )
-    {
-        this.id = id;
-    }
-
-//**********************************************************************************************************************
-// Canonical Methods
-//**********************************************************************************************************************
-
-    public int hashCode()
-    {
-        return ( id != null ? id.hashCode() : 0 );
     }
 }

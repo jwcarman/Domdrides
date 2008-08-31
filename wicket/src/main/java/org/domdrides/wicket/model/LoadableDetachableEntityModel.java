@@ -23,14 +23,23 @@ import org.domdrides.repository.Repository;
 import java.io.Serializable;
 
 /**
- * An implementation of {@link LoadableDetachableModel} which loads an entity from a repository.
+ * An implementation of {@link LoadableDetachableModel} which loads an entity from a {@link Repository}.
  *
  * @since 1.1
  */
 public class LoadableDetachableEntityModel<EntityType extends Entity<IdType>, IdType extends Serializable> extends LoadableDetachableModel<EntityType>
 {
+//**********************************************************************************************************************
+// Fields
+//**********************************************************************************************************************
+
+    private static final long serialVersionUID = 1L;
     private final Repository<EntityType,IdType> repository;
     private final IdType id;
+
+//**********************************************************************************************************************
+// Constructors
+//**********************************************************************************************************************
 
     /**
      * Creates a model that lazily loads an entity by id from the specified repository.
@@ -54,6 +63,10 @@ public class LoadableDetachableEntityModel<EntityType extends Entity<IdType>, Id
         this.repository = repository;
         this.id = entity.getId();
     }
+
+//**********************************************************************************************************************
+// Other Methods
+//**********************************************************************************************************************
 
     /**
      * Loads the entity from the repository.

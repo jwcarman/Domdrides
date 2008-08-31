@@ -23,6 +23,8 @@ import java.util.List;
 
 /**
  * A useful interface for repositories which support "paging."
+ *
+ * @since 1.1
  */
 public interface PageableRepository<EntityType extends Entity<IdType>, IdType extends Serializable> extends Repository<EntityType,IdType>
 {
