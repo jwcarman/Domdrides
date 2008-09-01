@@ -3,7 +3,7 @@
     <parent>
         <groupId>org.domdrides</groupId>
         <artifactId>domdrides</artifactId>
-        <version>1.2</version>
+        <version>1.2-SNAPSHOT</version>
     </parent>
     <artifactId>domdrides-maven-plugin</artifactId>
     <packaging>maven-plugin</packaging>
