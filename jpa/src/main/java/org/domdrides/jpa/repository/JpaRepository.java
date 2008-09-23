@@ -18,19 +18,23 @@ package org.domdrides.jpa.repository;
 
 import org.domdrides.entity.Entity;
 import org.domdrides.repository.PageableRepository;
-import org.springframework.orm.jpa.JpaCallback;
-import org.springframework.orm.jpa.support.JpaDaoSupport;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceException;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public abstract class JpaRepository<EntityType extends Entity<IdType>, IdType extends Serializable> extends JpaDaoSupport implements PageableRepository<EntityType, IdType>
+@Repository
+public abstract class JpaRepository<EntityType extends Entity<IdType>, IdType extends Serializable> implements PageableRepository<EntityType, IdType>
 {
+    @PersistenceContext
+    private EntityManager entityManager;
+
     private final Class<EntityType> entityClass;
 
     protected JpaRepository(Class<EntityType> entityClass)
@@ -41,7 +45,7 @@ public abstract class JpaRepository<EntityType extends Entity<IdType>, IdType ex
     @Transactional
     public EntityType add(EntityType entity)
     {
-        getJpaTemplate().persist(entity);
+        entityManager.persist(entity);
         return entity;
     }
 
@@ -63,31 +67,31 @@ public abstract class JpaRepository<EntityType extends Entity<IdType>, IdType ex
     @Transactional(readOnly = true)
     private HashSet<EntityType> queryForSet(String jpaql)
     {
-        return new HashSet<EntityType>(getJpaTemplate().find(jpaql));
+        return new HashSet<EntityType>(entityManager.createQuery(jpaql).getResultList());
     }
 
     @Transactional(readOnly = true)
     public EntityType getById(IdType id)
     {
-        return getJpaTemplate().find(entityClass, id);
+        return entityManager.find(entityClass, id);
     }
 
     @Transactional
     public void remove(EntityType entity)
     {
-        getJpaTemplate().remove(entity);
+        entityManager.remove(entity);
     }
 
     @Transactional
     public EntityType update(EntityType entity)
     {
-        return getJpaTemplate().merge(entity);
+        return entityManager.merge(entity);
     }
 
     @Transactional(readOnly = true)
     public int size()
     {
-        List results = getJpaTemplate().find("select count(*) from " + entityClass.getName());
+        List results = entityManager.createQuery("select count(*) from " + entityClass.getName()).getResultList();
         return ((Number)results.get(0)).intValue();
     }
 
@@ -95,12 +99,10 @@ public abstract class JpaRepository<EntityType extends Entity<IdType>, IdType ex
     @SuppressWarnings("unchecked")
     public List<EntityType> list(final int first, final int max, final String sortProperty, final boolean ascending)
     {
-        return (List<EntityType>)getJpaTemplate().executeFind(new JpaCallback()
-        {
-            public Object doInJpa(EntityManager entityManager) throws PersistenceException
-            {
-                return entityManager.createQuery("select x from " + entityClass.getName() + " x order by x." + sortProperty + (ascending ? " asc" : " desc")).setFirstResult(first).setMaxResults(max).getResultList();
-            }
-        });
+        final String jpaql = "select x from " + entityClass.getName() + " x order by x." + sortProperty +
+                        ( ascending ? " asc" : " desc" );
+        final Query query = entityManager.createQuery(jpaql);
+        query.setFirstResult(first).setMaxResults(max);
+        return query.getResultList();
     }
 }

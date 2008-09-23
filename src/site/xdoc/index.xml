@@ -33,9 +33,9 @@
                 Account.  Domdrides provides useful base classes for implementing entities.</li>
                 <li><b>Repositories</b> - a repository contains entities of a specific type.  For example, you might
                 have a PersonRepository or AccountRepository in your domain model.  Implementations for
-                    <a href="apidocs/org/domdrides/hibernate/repository/HibernateRepository.html">Hibernate</a>,
-                    <a href="apidocs/org/domdrides/jpa/repository/JpaRepository.html">The Java Persistence API (JPA)</a>
-                    , and <a href="apidocs/org/domdrides/ibatis/repository/IbatisRepository.html">iBATIS</a> are
+                    <a href="domdrides-hibernate/apidocs/org/domdrides/hibernate/repository/HibernateRepository.html">Hibernate</a>,
+                    <a href="domdrides-jpa/apidocs/org/domdrides/jpa/repository/JpaRepository.html">The Java Persistence API (JPA)</a>
+                    , and <a href="domdrides-ibatis/apidocs/org/domdrides/ibatis/repository/IbatisRepository.html">iBATIS</a> are
                     available for you to extend.
                 </li>
             </ul>
