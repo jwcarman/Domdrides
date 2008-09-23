@@ -33,7 +33,7 @@ import java.util.Set;
 public abstract class JpaRepository<EntityType extends Entity<IdType>, IdType extends Serializable> implements PageableRepository<EntityType, IdType>
 {
     @PersistenceContext
-    private EntityManager entityManager;
+    protected EntityManager entityManager;
 
     private final Class<EntityType> entityClass;
 
