@@ -25,6 +25,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ import java.util.Set;
  * @author James Carman
  * @since 1.0
  */
+@Repository
 public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdType extends Serializable> extends HibernateDaoSupport implements PageableRepository<EntityType, IdType>
 {
 //**********************************************************************************************************************
