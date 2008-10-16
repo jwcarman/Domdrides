@@ -25,7 +25,6 @@
         <module>ibatis</module>
         <module>maven</module>
         <module>example</module>
-        <module>wicket</module>
         <module>db4o</module>
     </modules>
     <properties>
