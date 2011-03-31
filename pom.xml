@@ -23,7 +23,6 @@
         <module>ibatis</module>
         <module>maven</module>
         <module>example</module>
-        <module>db4o</module>
     </modules>
     <properties>
         <hibernate.version>3.2.6.ga</hibernate.version>
