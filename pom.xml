@@ -153,8 +153,8 @@
 
 
     <scm>
-        <connection>scm:git:https://github.com/jwcarman/Domdrides</connection>
-        <developerConnection>scm:git:https://github.com/jwcarman/Domdrides</developerConnection>
+        <connection>scm:git:git@github.com:jwcarman/Domdrides.git</connection>
+        <developerConnection>scm:git:git@github.com:jwcarman/Domdrides.git</developerConnection>
         <url>git://github.com/jwcarman/Domdrides.git</url>
     </scm>
 
