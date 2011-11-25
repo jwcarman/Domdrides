@@ -3,7 +3,7 @@
     <parent>
         <artifactId>domdrides</artifactId>
         <groupId>org.domdrides</groupId>
-        <version>1.4-SNAPSHOT</version>
+        <version>1.4</version>
     </parent>
     <artifactId>domdrides-jpa</artifactId>
     <packaging>bundle</packaging>
