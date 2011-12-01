@@ -137,15 +137,6 @@
         </plugins>
     </reporting>
 
-    <distributionManagement>
-        <site>
-            <id>sourceforge.net</id>
-            <name>SourceForge Site</name>
-            <url>scp://shell.sourceforge.net/home/groups/d/do/domdrides/htdocs</url>
-        </site>
-    </distributionManagement>
-
-
     <scm>
         <connection>scm:git:git@github.com:jwcarman/Domdrides.git</connection>
         <developerConnection>scm:git:git@github.com:jwcarman/Domdrides.git</developerConnection>
