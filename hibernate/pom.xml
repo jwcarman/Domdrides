@@ -3,7 +3,7 @@
     <parent>
         <groupId>org.domdrides</groupId>
         <artifactId>domdrides</artifactId>
-        <version>1.6-SNAPSHOT</version>
+        <version>1.5-SNAPSHOT</version>
     </parent>
     <artifactId>domdrides-hibernate</artifactId>
     <packaging>bundle</packaging>
