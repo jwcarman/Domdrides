@@ -32,7 +32,6 @@ import java.util.Map;
 
 /**
  * @goal generate-repository
- *
  */
 public class GenerateRepositoryMojo extends AbstractGeneratorMojo
 {
@@ -40,7 +39,7 @@ public class GenerateRepositoryMojo extends AbstractGeneratorMojo
 // Fields
 //**********************************************************************************************************************
 
-    private static Map<String,String> repoImplMap = new HashMap<String,String>();
+    private static Map<String, String> repoImplMap = new HashMap<String, String>();
 
     /**
      * @parameter expression="${entityName}"
@@ -49,7 +48,6 @@ public class GenerateRepositoryMojo extends AbstractGeneratorMojo
     private String entityName;
 
     /**
-     *
      * @parameter expression = "${repositoryType}" default-value="hibernate"
      * @required
      */
@@ -79,16 +77,16 @@ public class GenerateRepositoryMojo extends AbstractGeneratorMojo
         final Class idType = getPropertyType(entityClass, "id");
         final VelocityContext ctx = new VelocityContext();
         ctx.put("entityClass", entityClass);
-        ctx.put("idType", idType );
+        ctx.put("idType", idType);
         ctx.put("interfacePackageName", interfacePackageName);
-        ctx.put("interfaceName", interfaceName );
-        ctx.put("projectVersion", getProjectVersion() );
-        generateSourceFile("RepositoryInterfaceTemplate.vm", ctx, interfacePackageName + "." + interfaceName );
+        ctx.put("interfaceName", interfaceName);
+        ctx.put("projectVersion", getProjectVersion());
+        generateSourceFile("RepositoryInterfaceTemplate.vm", ctx, interfacePackageName + "." + interfaceName);
 
-        ctx.put("implSuperclass", implSuperclass );
+        ctx.put("implSuperclass", implSuperclass);
         ctx.put("implPackageName", implPackageName);
-        ctx.put("implClassName", implClassName );
-        generateSourceFile("RepositoryImplTemplate.vm", ctx, implPackageName + "." + implClassName );
+        ctx.put("implClassName", implClassName);
+        generateSourceFile("RepositoryImplTemplate.vm", ctx, implPackageName + "." + implClassName);
     }
 
 //**********************************************************************************************************************
@@ -100,7 +98,7 @@ public class GenerateRepositoryMojo extends AbstractGeneratorMojo
         return entityName;
     }
 
-    public void setEntityName( String entityName )
+    public void setEntityName(String entityName)
     {
         this.entityName = entityName;
     }
@@ -109,22 +107,22 @@ public class GenerateRepositoryMojo extends AbstractGeneratorMojo
 // Other Methods
 //**********************************************************************************************************************
 
-    private Class findTypeBoundToVariable( Class c, TypeVariable idTypeVariable )
+    private Class findTypeBoundToVariable(Class c, TypeVariable idTypeVariable)
     {
-        while( c != null )
+        while (c != null)
         {
             Type genericSupertype = c.getGenericSuperclass();
-            if( genericSupertype instanceof ParameterizedType )
+            if (genericSupertype instanceof ParameterizedType)
             {
-                ParameterizedType pt = ( ParameterizedType ) genericSupertype;
-                final Class rawType = ( Class ) pt.getRawType();
+                ParameterizedType pt = (ParameterizedType) genericSupertype;
+                final Class rawType = (Class) pt.getRawType();
                 TypeVariable[] typeParameters = rawType.getTypeParameters();
-                for( int i = 0; i < typeParameters.length; i++ )
+                for (int i = 0; i < typeParameters.length; i++)
                 {
                     TypeVariable typeParameter = typeParameters[i];
-                    if( typeParameter == idTypeVariable )
+                    if (typeParameter.equals(idTypeVariable))
                     {
-                        return ( Class ) pt.getActualTypeArguments()[i];
+                        return (Class) pt.getActualTypeArguments()[i];
                     }
                 }
             }
@@ -133,31 +131,30 @@ public class GenerateRepositoryMojo extends AbstractGeneratorMojo
         return null;
     }
 
-    private Class getPropertyType( Class c, String property ) throws MojoExecutionException
+    private Class getPropertyType(Class c, String property) throws MojoExecutionException
     {
         Method readMethod = getReadMethod(c, property);
         Type type = readMethod.getGenericReturnType();
-        if( type instanceof TypeVariable )
+        if (type instanceof TypeVariable)
         {
-            TypeVariable typeVariable = ( TypeVariable ) type;
+            TypeVariable typeVariable = (TypeVariable) type;
             return findTypeBoundToVariable(c, typeVariable);
-        }
-        else if( type instanceof Class )
+        } else if (type instanceof Class)
         {
-            return ( Class ) type;
+            return (Class) type;
         }
         return null;
     }
 
-    private Method getReadMethod( Class c, String property ) throws MojoExecutionException
+    private Method getReadMethod(Class c, String property) throws MojoExecutionException
     {
         try
         {
             Method readMethod = null;
             PropertyDescriptor[] propertyDescriptors = Introspector.getBeanInfo(c).getPropertyDescriptors();
-            for( PropertyDescriptor propertyDescriptor : propertyDescriptors )
+            for (PropertyDescriptor propertyDescriptor : propertyDescriptors)
             {
-                if( property.equals(propertyDescriptor.getName()) )
+                if (property.equals(propertyDescriptor.getName()))
                 {
                     readMethod = propertyDescriptor.getReadMethod();
                     break;
@@ -165,7 +162,7 @@ public class GenerateRepositoryMojo extends AbstractGeneratorMojo
             }
             return readMethod;
         }
-        catch( IntrospectionException e )
+        catch (IntrospectionException e)
         {
             throw new MojoExecutionException("Unable to determine id type.", e);
         }

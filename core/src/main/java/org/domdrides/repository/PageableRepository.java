@@ -36,5 +36,5 @@ public interface PageableRepository<EntityType extends Entity<IdType>, IdType ex
      * @param ascending whether or not the sorting is asceding
      * @return one page of data from this repository
      */
-    public List<EntityType> list(int first, int max, String sortProperty, boolean ascending);
+    List<EntityType> list(int first, int max, String sortProperty, boolean ascending);
 }

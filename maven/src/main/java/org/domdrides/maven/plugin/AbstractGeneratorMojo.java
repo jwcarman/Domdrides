@@ -46,13 +46,13 @@ public abstract class AbstractGeneratorMojo extends AbstractMojo
      * @parameter expression="${project.build.sourceDirectory}"
      * @required
      */
-    protected File srcDirectory;
+    private File srcDirectory;
 
     /**
      * @parameter expression="${basePackage}"
      * @required
      */
-    protected String basePackage;
+    private String basePackage;
     /**
      * @parameter expression="${project.runtimeClasspathElements}"
      * @required

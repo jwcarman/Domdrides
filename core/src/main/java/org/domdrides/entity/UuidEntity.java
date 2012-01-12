@@ -54,13 +54,4 @@ public abstract class UuidEntity extends AbstractEntity<String>
     {
         return super.getId();
     }
-
-//**********************************************************************************************************************
-// Other Methods
-//**********************************************************************************************************************
-
-    protected void setId(String id)
-    {
-        super.setId(id);
-    }
 }

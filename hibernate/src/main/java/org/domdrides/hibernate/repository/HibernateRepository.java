@@ -42,16 +42,17 @@ import java.util.Set;
 @Repository
 public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdType extends Serializable> extends HibernateDaoSupport implements PageableRepository<EntityType, IdType>
 {
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // Fields
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
-    private final Class<EntityType> entityClass;
+    public static final String UNCHECKED = "unchecked";
     private static final String ASSOCIATION_ALIAS = "sp";
+    private final Class<EntityType> entityClass;
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // Constructors
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     /**
      * Constructs a repository which supports <code>entityClass</code>.
@@ -62,6 +63,11 @@ public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdT
     {
         this.entityClass = entityClass;
     }
+
+//----------------------------------------------------------------------------------------------------------------------
+// PageableRepository Implementation
+//----------------------------------------------------------------------------------------------------------------------
+
 
     /**
      * Returns one page of data from this repository.
@@ -92,9 +98,9 @@ public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdT
         return list(c);
     }
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // Repository Implementation
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     @Transactional()
     public EntityType add(EntityType entity)
@@ -127,6 +133,12 @@ public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdT
         getSession().delete(entity);
     }
 
+    @Transactional(readOnly = true)
+    public int size()
+    {
+        return ((Number)createCriteria().setProjection(Projections.count("id")).uniqueResult()).intValue();
+    }
+
     @Transactional
     public EntityType update(EntityType entity)
     {
@@ -134,15 +146,19 @@ public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdT
         return entity;
     }
 
-    @Transactional(readOnly = true)
-    public int size()
-    {
-        return ((Number)createCriteria().setProjection(Projections.count("id")).uniqueResult()).intValue();
-    }
-    
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // Other Methods
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
+
+    /**
+     * Creates a {@link Criteria} object which returns the entity type.
+     *
+     * @return a {@link Criteria} object which returns the entity type
+     */
+    protected Criteria createCriteria()
+    {
+        return getSession().createCriteria(entityClass);
+    }
 
     /**
      * Returns a list of entities based on the provided criteria.
@@ -150,7 +166,7 @@ public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdT
      * @param criteria the criteria
      * @return a list of entities based on the provided criteria
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings(UNCHECKED)
     @Transactional(readOnly = true)
     protected List<EntityType> list(Criteria criteria)
     {
@@ -163,7 +179,7 @@ public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdT
      * @param query the query
      * @return a list of entities based on the provided query
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings(UNCHECKED)
     @Transactional(readOnly = true)
     protected List<EntityType> list(Query query)
     {
@@ -176,7 +192,7 @@ public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdT
      * @param criteria the criteria
      * @return a set of entities based on the provided criteria
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings(UNCHECKED)
     @Transactional(readOnly = true)
     protected Set<EntityType> set(Criteria criteria)
     {
@@ -189,7 +205,7 @@ public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdT
      * @param query the query
      * @return a set of entities based on the provided query
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings(UNCHECKED)
     @Transactional(readOnly = true)
     protected Set<EntityType> set(Query query)
     {
@@ -218,15 +234,5 @@ public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdT
     protected EntityType uniqueResult(Query query)
     {
         return entityClass.cast(query.uniqueResult());
-    }
-
-    /**
-     * Creates a {@link Criteria} object which returns the entity type.
-     *
-     * @return a {@link Criteria} object which returns the entity type
-     */
-    protected Criteria createCriteria()
-    {
-        return getSession().createCriteria(entityClass);
     }
 }
