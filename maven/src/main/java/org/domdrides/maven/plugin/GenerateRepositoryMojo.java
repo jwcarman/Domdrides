@@ -107,11 +107,12 @@ public class GenerateRepositoryMojo extends AbstractGeneratorMojo
 // Other Methods
 //**********************************************************************************************************************
 
-    private Class findTypeBoundToVariable(Class c, TypeVariable idTypeVariable)
+    private Class findTypeBoundToVariable(final Class c, final TypeVariable idTypeVariable)
     {
-        while (c != null)
+        Class currentClass = c;
+        while (currentClass != null)
         {
-            Type genericSupertype = c.getGenericSuperclass();
+            Type genericSupertype = currentClass.getGenericSuperclass();
             if (genericSupertype instanceof ParameterizedType)
             {
                 ParameterizedType pt = (ParameterizedType) genericSupertype;
@@ -126,12 +127,12 @@ public class GenerateRepositoryMojo extends AbstractGeneratorMojo
                     }
                 }
             }
-            c = c.getSuperclass();
+            currentClass = currentClass.getSuperclass();
         }
         return null;
     }
 
-    private Class getPropertyType(Class c, String property) throws MojoExecutionException
+    private Class getPropertyType(final Class c, final String property) throws MojoExecutionException
     {
         Method readMethod = getReadMethod(c, property);
         Type type = readMethod.getGenericReturnType();
