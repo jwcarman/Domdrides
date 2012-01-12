@@ -32,15 +32,41 @@ import java.util.Set;
 @Repository
 public abstract class JpaRepository<EntityType extends Entity<IdType>, IdType extends Serializable> implements PageableRepository<EntityType, IdType>
 {
-    @PersistenceContext
-    protected EntityManager entityManager;
+//----------------------------------------------------------------------------------------------------------------------
+// Fields
+//----------------------------------------------------------------------------------------------------------------------
 
+    @PersistenceContext
+    private EntityManager entityManager;
     private final Class<EntityType> entityClass;
+
+//----------------------------------------------------------------------------------------------------------------------
+// Constructors
+//----------------------------------------------------------------------------------------------------------------------
 
     protected JpaRepository(Class<EntityType> entityClass)
     {
         this.entityClass = entityClass;
     }
+
+//----------------------------------------------------------------------------------------------------------------------
+// PageableRepository Implementation
+//----------------------------------------------------------------------------------------------------------------------
+
+    @Transactional(readOnly = true)
+    @SuppressWarnings("unchecked")
+    public List<EntityType> list(final int first, final int max, final String sortProperty, final boolean ascending)
+    {
+        final String jpaql = "select x from " + entityClass.getName() + " x order by x." + sortProperty +
+                        ( ascending ? " asc" : " desc" );
+        final Query query = entityManager.createQuery(jpaql);
+        query.setFirstResult(first).setMaxResults(max);
+        return query.getResultList();
+    }
+
+//----------------------------------------------------------------------------------------------------------------------
+// Repository Implementation
+//----------------------------------------------------------------------------------------------------------------------
 
     @Transactional
     public EntityType add(EntityType entity)
@@ -63,13 +89,6 @@ public abstract class JpaRepository<EntityType extends Entity<IdType>, IdType ex
         return queryForSet(jpaql);
     }
 
-    @SuppressWarnings("unchecked")
-    @Transactional(readOnly = true)
-    private Set<EntityType> queryForSet(String jpaql)
-    {
-        return new HashSet<EntityType>(entityManager.createQuery(jpaql).getResultList());
-    }
-
     @Transactional(readOnly = true)
     public EntityType getById(IdType id)
     {
@@ -82,12 +101,6 @@ public abstract class JpaRepository<EntityType extends Entity<IdType>, IdType ex
         entityManager.remove(entity);
     }
 
-    @Transactional
-    public EntityType update(EntityType entity)
-    {
-        return entityManager.merge(entity);
-    }
-
     @Transactional(readOnly = true)
     public int size()
     {
@@ -95,14 +108,34 @@ public abstract class JpaRepository<EntityType extends Entity<IdType>, IdType ex
         return ((Number)results.get(0)).intValue();
     }
 
-    @Transactional(readOnly = true)
-    @SuppressWarnings("unchecked")
-    public List<EntityType> list(final int first, final int max, final String sortProperty, final boolean ascending)
+    @Transactional
+    public EntityType update(EntityType entity)
     {
-        final String jpaql = "select x from " + entityClass.getName() + " x order by x." + sortProperty +
-                        ( ascending ? " asc" : " desc" );
-        final Query query = entityManager.createQuery(jpaql);
-        query.setFirstResult(first).setMaxResults(max);
-        return query.getResultList();
+        return entityManager.merge(entity);
+    }
+
+//----------------------------------------------------------------------------------------------------------------------
+// Getter/Setter Methods
+//----------------------------------------------------------------------------------------------------------------------
+
+    protected Class<EntityType> getEntityClass()
+    {
+        return entityClass;
+    }
+
+    protected EntityManager getEntityManager()
+    {
+        return entityManager;
+    }
+
+//----------------------------------------------------------------------------------------------------------------------
+// Other Methods
+//----------------------------------------------------------------------------------------------------------------------
+
+    @SuppressWarnings("unchecked")
+    @Transactional(readOnly = true)
+    private Set<EntityType> queryForSet(String jpaql)
+    {
+        return new HashSet<EntityType>(entityManager.createQuery(jpaql).getResultList());
     }
 }
