@@ -65,7 +65,7 @@ public abstract class JpaRepository<EntityType extends Entity<IdType>, IdType ex
 
     @SuppressWarnings("unchecked")
     @Transactional(readOnly = true)
-    private HashSet<EntityType> queryForSet(String jpaql)
+    private Set<EntityType> queryForSet(String jpaql)
     {
         return new HashSet<EntityType>(entityManager.createQuery(jpaql).getResultList());
     }
