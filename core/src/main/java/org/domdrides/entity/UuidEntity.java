@@ -42,13 +42,12 @@ public abstract class UuidEntity extends AbstractEntity<String>
 
     public UuidEntity()
     {
-        setId(UUID.randomUUID().toString());
+        super(UUID.randomUUID().toString());
     }
 
 //**********************************************************************************************************************
 // Entity Implementation
 //**********************************************************************************************************************
-
 
     @Id
     public String getId()

@@ -42,6 +42,11 @@ public abstract class AbstractEntity<IdType extends Serializable> implements Ent
     {
     }
 
+    protected AbstractEntity(IdType id)
+    {
+        this.id = id;
+    }
+
 //**********************************************************************************************************************
 // Entity Implementation
 //**********************************************************************************************************************
