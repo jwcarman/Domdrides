@@ -14,24 +14,25 @@
  * limitations under the License.
  */
 
-package org.domdrides.ibatis.repository;
+package org.domdrides.mybatis.repository;
 
 import org.domdrides.entity.Entity;
 import org.domdrides.repository.Repository;
-import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
+import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
- * An <a href="http://ibatis.apache.org">iBATIS</a>-based repository implementation
+ * An <a href="http://mybatis.org">myBATIS</a>-based repository implementation
  *  
- * @since 1.0
+ * @since 1.7
  */
-public class    IbatisRepository<EntityType extends Entity<IdType>, IdType extends Serializable> extends
-        SqlMapClientDaoSupport implements Repository<EntityType, IdType>
+public class MybatisRepository<EntityType extends Entity<IdType>, IdType extends Serializable> extends
+        SqlSessionDaoSupport implements Repository<EntityType, IdType>
 {
 //**********************************************************************************************************************
 // Fields
@@ -48,7 +49,7 @@ public class    IbatisRepository<EntityType extends Entity<IdType>, IdType exten
 // Constructors
 //**********************************************************************************************************************
 
-    public IbatisRepository( Class<EntityType> entityClass )
+    public MybatisRepository(Class<EntityType> entityClass)
     {
         final String simpleName = entityClass.getSimpleName();
         this.addId = simpleName + ".add";
@@ -66,7 +67,7 @@ public class    IbatisRepository<EntityType extends Entity<IdType>, IdType exten
     @Transactional()
     public EntityType add( EntityType entity )
     {
-        getSqlMapClientTemplate().insert(addId, entity);
+        getSqlSession().insert(addId, entity);
         return entity;
     }
 
@@ -77,36 +78,35 @@ public class    IbatisRepository<EntityType extends Entity<IdType>, IdType exten
     }
 
     @Transactional( readOnly = true )
-    @SuppressWarnings( "unchecked" )
     public Set<EntityType> getAll()
     {
-        return new HashSet<EntityType>(getSqlMapClientTemplate().queryForList(getAllId));
+        List<EntityType> allEntities = getSqlSession().selectList(getAllId);
+        return new HashSet<EntityType>(allEntities);
     }
 
     @Transactional( readOnly = true )
-    @SuppressWarnings( "unchecked" )
     public EntityType getById( IdType id )
     {
-        return ( EntityType ) getSqlMapClientTemplate().queryForObject(getByIdId, id);
+        return getSqlSession().selectOne(getByIdId, id);
     }
 
     @Transactional
     public void remove( EntityType entity )
     {
-        getSqlMapClientTemplate().delete(removeId, entity.getId());
+        getSqlSession().delete(removeId, entity.getId());
     }
 
     @Transactional
     public EntityType update( EntityType entity )
     {
-        getSqlMapClientTemplate().update(updateId, entity);
+        getSqlSession().update(updateId, entity);
         return entity;
     }
 
     @Transactional(readOnly = true)
     public int size()
     {
-        return ((Number)getSqlMapClientTemplate().queryForObject(sizeId)).intValue();
+        return ((Number)getSqlSession().selectOne(sizeId)).intValue();
     }
 
 //**********************************************************************************************************************
