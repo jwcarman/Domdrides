@@ -3,7 +3,7 @@
     <parent>
         <groupId>org.domdrides</groupId>
         <artifactId>domdrides</artifactId>
-        <version>1.7-SNAPSHOT</version>
+        <version>1.7</version>
     </parent>
     <artifactId>domdrides-example</artifactId>
     <packaging>jar</packaging>
