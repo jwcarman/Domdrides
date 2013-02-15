@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.sonatype.oss</groupId>
@@ -9,7 +8,7 @@
     <groupId>org.domdrides</groupId>
     <artifactId>domdrides</artifactId>
     <packaging>pom</packaging>
-    <version>1.8-SNAPSHOT</version>
+    <version>1.8</version>
     <name>Domdrides</name>
     <description>A DOMain-DRIven DESign Library for Java</description>
     <url>http://domdrides.sourceforge.net</url>
@@ -74,7 +73,8 @@
         <url>https://github.com/jwcarman/Domdrides</url>
         <connection>scm:git:git@github.com:jwcarman/Domdrides.git</connection>
         <developerConnection>scm:git:git@github.com:jwcarman/Domdrides.git</developerConnection>
-    </scm>
+      <tag>domdrides-1.8</tag>
+  </scm>
 
     <distributionManagement>
         <site>
