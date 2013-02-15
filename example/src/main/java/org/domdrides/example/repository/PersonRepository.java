@@ -24,5 +24,4 @@ import org.domdrides.repository.Repository;
  */
 public interface PersonRepository extends Repository<Person,String>
 {
-
 }

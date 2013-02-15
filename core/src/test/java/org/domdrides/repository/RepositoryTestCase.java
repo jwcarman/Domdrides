@@ -39,15 +39,15 @@ import java.util.List;
  */
 public abstract class RepositoryTestCase extends AbstractTransactionalTestNGSpringContextTests
 {
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // Fields
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     protected PersonRepository personRepository;
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // Getter/Setter Methods
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     @Autowired
     public void setPersonRepository( PersonRepository personRepository )
@@ -55,9 +55,34 @@ public abstract class RepositoryTestCase extends AbstractTransactionalTestNGSpri
         this.personRepository = personRepository;
     }
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // Other Methods
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
+
+    protected List<Person> addPersonsToRepository( int n )
+    {
+        return addPersonsToRepository(n, "First", "Last", "SSN");
+    }
+
+    protected List<Person> addPersonsToRepository( int n, String firstPrefix, String lastPrefix, String ssnPrefix )
+    {
+        final List<Person> original = new ArrayList<Person>(n);
+        for( int i = 0; i < n; ++i )
+        {
+            final Person p = new Person();
+            p.setFirst(firstPrefix + i);
+            p.setLast(lastPrefix + i);
+            p.setSsn(ssnPrefix + i);
+            personRepository.add(p);
+            original.add(p);
+        }
+        return original;
+    }
+    
+    protected void assertCollectionsSame( Collection<Person> expected, Collection<Person> actual )
+    {
+        assertEquals(createSortedPersonList(expected), createSortedPersonList(actual));
+    }
 
     @SuppressWarnings( "unchecked" )
     private List<Person> createSortedPersonList( Collection<Person> people )
@@ -65,13 +90,6 @@ public abstract class RepositoryTestCase extends AbstractTransactionalTestNGSpri
         final List<Person> list = new ArrayList<Person>(people);
         Collections.sort(list, new PropertyComparator("ssn", true, true));
         return list;
-    }
-
-    @Test
-    @SuppressWarnings( "unchecked" )
-    public void testGetAll()
-    {
-        assertCollectionsSame(addPersonsToRepository(10), personRepository.getAll());
     }
 
     @Test
@@ -100,6 +118,13 @@ public abstract class RepositoryTestCase extends AbstractTransactionalTestNGSpri
     }
 
     @Test
+    @SuppressWarnings( "unchecked" )
+    public void testGetAll()
+    {
+        assertCollectionsSame(addPersonsToRepository(10), personRepository.getAll());
+    }
+
+    @Test
     public void testGetById()
     {
         final Person p = new Person();
@@ -125,6 +150,13 @@ public abstract class RepositoryTestCase extends AbstractTransactionalTestNGSpri
     }
 
     @Test
+    public void testSize()
+    {
+        addPersonsToRepository(10);
+        assertEquals(personRepository.size(), 10);
+    }
+
+    @Test
     public void testUpdate()
     {
         final Person p = new Person();
@@ -137,37 +169,5 @@ public abstract class RepositoryTestCase extends AbstractTransactionalTestNGSpri
         personRepository.update(p);
         final Person queried = personRepository.getById(p.getId());
         assertEquals("Black", queried.getLast());
-    }
-
-    @Test
-    public void testSize()
-    {
-        addPersonsToRepository(10);
-        assertEquals(personRepository.size(), 10);
-    }
-    
-    protected void assertCollectionsSame( Collection<Person> expected, Collection<Person> actual )
-    {
-        assertEquals(createSortedPersonList(expected), createSortedPersonList(actual));
-    }
-
-    protected List<Person> addPersonsToRepository( int n )
-    {
-        return addPersonsToRepository(n, "First", "Last", "SSN");
-    }
-
-    protected List<Person> addPersonsToRepository( int n, String firstPrefix, String lastPrefix, String ssnPrefix )
-    {
-        final List<Person> original = new ArrayList<Person>(n);
-        for( int i = 0; i < n; ++i )
-        {
-            final Person p = new Person();
-            p.setFirst(firstPrefix + i);
-            p.setLast(lastPrefix + i);
-            p.setSsn(ssnPrefix + i);
-            personRepository.add(p);
-            original.add(p);
-        }
-        return original;
     }
 }

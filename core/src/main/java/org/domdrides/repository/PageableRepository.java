@@ -28,6 +28,10 @@ import java.util.List;
  */
 public interface PageableRepository<EntityType extends Entity<IdType>, IdType extends Serializable> extends Repository<EntityType,IdType>
 {
+//----------------------------------------------------------------------------------------------------------------------
+// Other Methods
+//----------------------------------------------------------------------------------------------------------------------
+
     /**
      * Returns one page of data from this repository.
      * @param first the first entity to return

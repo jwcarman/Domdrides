@@ -25,6 +25,9 @@ import java.util.Set;
 
 public interface ExtendedPersonRepository extends PersonRepository
 {
+//----------------------------------------------------------------------------------------------------------------------
+// Other Methods
+//----------------------------------------------------------------------------------------------------------------------
 
     @Transactional(readOnly = true)
     List<Person> getAllAsListByCriteria();

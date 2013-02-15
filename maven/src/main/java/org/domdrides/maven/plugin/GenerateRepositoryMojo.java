@@ -35,9 +35,9 @@ import java.util.Map;
  */
 public class GenerateRepositoryMojo extends AbstractGeneratorMojo
 {
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // Fields
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     private static Map<String, String> repoImplMap = new HashMap<String, String>();
 
@@ -53,18 +53,18 @@ public class GenerateRepositoryMojo extends AbstractGeneratorMojo
      */
     private String repositoryType;
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // Static Methods
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     static
     {
         repoImplMap.put("hibernate", "org.domdrides.hibernate.repository.HibernateRepository");
     }
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // Mojo Implementation
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     public void execute() throws MojoExecutionException, MojoFailureException
     {
@@ -89,9 +89,9 @@ public class GenerateRepositoryMojo extends AbstractGeneratorMojo
         generateSourceFile("RepositoryImplTemplate.vm", ctx, implPackageName + "." + implClassName);
     }
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // Getter/Setter Methods
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     public String getEntityName()
     {
@@ -103,34 +103,9 @@ public class GenerateRepositoryMojo extends AbstractGeneratorMojo
         this.entityName = entityName;
     }
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // Other Methods
-//**********************************************************************************************************************
-
-    private Class findTypeBoundToVariable(final Class c, final TypeVariable idTypeVariable)
-    {
-        Class currentClass = c;
-        while (currentClass != null)
-        {
-            Type genericSupertype = currentClass.getGenericSuperclass();
-            if (genericSupertype instanceof ParameterizedType)
-            {
-                ParameterizedType pt = (ParameterizedType) genericSupertype;
-                final Class rawType = (Class) pt.getRawType();
-                TypeVariable[] typeParameters = rawType.getTypeParameters();
-                for (int i = 0; i < typeParameters.length; i++)
-                {
-                    TypeVariable typeParameter = typeParameters[i];
-                    if (typeParameter.equals(idTypeVariable))
-                    {
-                        return (Class) pt.getActualTypeArguments()[i];
-                    }
-                }
-            }
-            currentClass = currentClass.getSuperclass();
-        }
-        return null;
-    }
+//----------------------------------------------------------------------------------------------------------------------
 
     private Class getPropertyType(final Class c, final String property) throws MojoExecutionException
     {
@@ -167,5 +142,30 @@ public class GenerateRepositoryMojo extends AbstractGeneratorMojo
         {
             throw new MojoExecutionException("Unable to determine id type.", e);
         }
+    }
+
+    private Class findTypeBoundToVariable(final Class c, final TypeVariable idTypeVariable)
+    {
+        Class currentClass = c;
+        while (currentClass != null)
+        {
+            Type genericSupertype = currentClass.getGenericSuperclass();
+            if (genericSupertype instanceof ParameterizedType)
+            {
+                ParameterizedType pt = (ParameterizedType) genericSupertype;
+                final Class rawType = (Class) pt.getRawType();
+                TypeVariable[] typeParameters = rawType.getTypeParameters();
+                for (int i = 0; i < typeParameters.length; i++)
+                {
+                    TypeVariable typeParameter = typeParameters[i];
+                    if (typeParameter.equals(idTypeVariable))
+                    {
+                        return (Class) pt.getActualTypeArguments()[i];
+                    }
+                }
+            }
+            currentClass = currentClass.getSuperclass();
+        }
+        return null;
     }
 }

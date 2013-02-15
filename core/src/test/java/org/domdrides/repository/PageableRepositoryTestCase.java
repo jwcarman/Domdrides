@@ -31,6 +31,10 @@ import java.util.Comparator;
 
 public abstract class PageableRepositoryTestCase extends RepositoryTestCase
 {
+//----------------------------------------------------------------------------------------------------------------------
+// Other Methods
+//----------------------------------------------------------------------------------------------------------------------
+
     @Test
     @SuppressWarnings("unchecked")
     public void testListMethod()

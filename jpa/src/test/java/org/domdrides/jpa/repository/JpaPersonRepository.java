@@ -29,6 +29,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class JpaPersonRepository extends JpaRepository<Person, String> implements PersonRepository
 {
+//----------------------------------------------------------------------------------------------------------------------
+// Constructors
+//----------------------------------------------------------------------------------------------------------------------
+
     public JpaPersonRepository()
     {
         super(Person.class);

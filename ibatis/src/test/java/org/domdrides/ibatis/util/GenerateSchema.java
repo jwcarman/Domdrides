@@ -23,6 +23,10 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
  */
 public class GenerateSchema extends JdbcDaoSupport
 {
+//----------------------------------------------------------------------------------------------------------------------
+// Other Methods
+//----------------------------------------------------------------------------------------------------------------------
+
     public void init()
     {
         getJdbcTemplate().execute("create table person (id varchar(255), first varchar(255), last varchar(255), ssn varchar(255))");   

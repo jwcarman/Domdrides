@@ -68,7 +68,6 @@ public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdT
 // PageableRepository Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
-
     /**
      * Returns one page of data from this repository.
      * @param first the first entity to return

@@ -28,11 +28,28 @@ import org.testng.annotations.Test;
 @ContextConfiguration(locations = "TestHibernateRepository.xml")
 public class TestHibernateRepository extends PageableRepositoryTestCase
 {
+//----------------------------------------------------------------------------------------------------------------------
+// Other Methods
+//----------------------------------------------------------------------------------------------------------------------
+
     @Test
-    public void testGetAllAsSetByQuery()
+    public void teetGetByIdUsingQuery()
     {
         ExtendedPersonRepository repo = (ExtendedPersonRepository) personRepository;
-        repo.getAllAsSetByQuery();
+        final Person expected = new Person();
+        expected.setFirst("Slappy");
+        expected.setLast("White");
+        expected.setSsn("123-45-6789");
+        repo.add(expected);
+        final Person actual = repo.getByIdUsingQuery(expected.getId());
+        assertSame(actual, expected);
+    }
+
+    @Test
+    public void testGetAllAsListByCriteria()
+    {
+        ExtendedPersonRepository repo = (ExtendedPersonRepository) personRepository;
+        repo.getAllAsListByCriteria();
     }
 
     @Test
@@ -50,23 +67,9 @@ public class TestHibernateRepository extends PageableRepositoryTestCase
     }
 
     @Test
-    public void testGetAllAsListByCriteria()
+    public void testGetAllAsSetByQuery()
     {
         ExtendedPersonRepository repo = (ExtendedPersonRepository) personRepository;
-        repo.getAllAsListByCriteria();
+        repo.getAllAsSetByQuery();
     }
-
-    @Test
-    public void teetGetByIdUsingQuery()
-    {
-        ExtendedPersonRepository repo = (ExtendedPersonRepository) personRepository;
-        final Person expected = new Person();
-        expected.setFirst("Slappy");
-        expected.setLast("White");
-        expected.setSsn("123-45-6789");
-        repo.add(expected);
-        final Person actual = repo.getByIdUsingQuery(expected.getId());
-        assertSame(actual, expected);
-    }
-
 }

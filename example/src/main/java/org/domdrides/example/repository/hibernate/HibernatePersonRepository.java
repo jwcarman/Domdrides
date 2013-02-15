@@ -25,6 +25,10 @@ import org.domdrides.example.repository.PersonRepository;
  */
 public class HibernatePersonRepository extends HibernateRepository<Person,String> implements PersonRepository
 {
+//----------------------------------------------------------------------------------------------------------------------
+// Constructors
+//----------------------------------------------------------------------------------------------------------------------
+
     public HibernatePersonRepository()
     {
         super(Person.class);

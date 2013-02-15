@@ -25,6 +25,10 @@ import org.domdrides.jpa.repository.JpaRepository;
  */
 public class JpaPersonRepository extends JpaRepository<Person,String> implements PersonRepository
 {
+//----------------------------------------------------------------------------------------------------------------------
+// Constructors
+//----------------------------------------------------------------------------------------------------------------------
+
     public JpaPersonRepository()
     {
         super(Person.class);

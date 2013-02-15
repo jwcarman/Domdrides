@@ -24,6 +24,10 @@ import org.domdrides.repository.PersonRepository;
  */
 public class IbatisPersonRepository extends IbatisRepository<Person, String> implements PersonRepository
 {
+//----------------------------------------------------------------------------------------------------------------------
+// Constructors
+//----------------------------------------------------------------------------------------------------------------------
+
     public IbatisPersonRepository()
     {
         super(Person.class);

@@ -38,9 +38,9 @@ import java.net.MalformedURLException;
  */
 public abstract class AbstractGeneratorMojo extends AbstractMojo
 {
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // Fields
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     /**
      * @parameter expression="${project.build.sourceDirectory}"
@@ -67,9 +67,9 @@ public abstract class AbstractGeneratorMojo extends AbstractMojo
      */
     private String projectVersion;
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // Getter/Setter Methods
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     public String getBasePackage()
     {
@@ -100,20 +100,6 @@ public abstract class AbstractGeneratorMojo extends AbstractMojo
         return enclosingProjectClassLoader;
     }
 
-    public File getSrcDirectory()
-    {
-        return srcDirectory;
-    }
-
-    public void setSrcDirectory( File srcDirectory )
-    {
-        this.srcDirectory = srcDirectory;
-    }
-
-//**********************************************************************************************************************
-// Other Methods
-//**********************************************************************************************************************
-
     private ClassLoader createClassLoader() throws MojoExecutionException
     {
         try
@@ -131,6 +117,20 @@ public abstract class AbstractGeneratorMojo extends AbstractMojo
             throw new MojoExecutionException("Invalid classpath element.", e);
         }
     }
+
+    public File getSrcDirectory()
+    {
+        return srcDirectory;
+    }
+
+    public void setSrcDirectory( File srcDirectory )
+    {
+        this.srcDirectory = srcDirectory;
+    }
+
+//----------------------------------------------------------------------------------------------------------------------
+// Other Methods
+//----------------------------------------------------------------------------------------------------------------------
 
     protected VelocityEngine createVelocityEngine() throws MojoExecutionException
     {
@@ -181,15 +181,15 @@ public abstract class AbstractGeneratorMojo extends AbstractMojo
         }
     }
 
+    protected String getEntityPackage()
+    {
+        return basePackage + ".entity";
+    }
+
     protected String getProjectVersion()
     {
         final int ndx = projectVersion.lastIndexOf("-SNAPSHOT");
         return ndx >= 0 ? projectVersion.substring(0, ndx) : projectVersion;
-    }
-
-    protected String getEntityPackage()
-    {
-        return basePackage + ".entity";
     }
 
     protected String getRepositoryPackage()

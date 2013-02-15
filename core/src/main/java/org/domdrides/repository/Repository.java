@@ -31,9 +31,9 @@ import java.util.Set;
  */
 public interface Repository<EntityType extends Entity<IdType>, IdType extends Serializable>
 {
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // Other Methods
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     /**
      * Adds the entity to this repository.
@@ -74,16 +74,16 @@ public interface Repository<EntityType extends Entity<IdType>, IdType extends Se
     void remove( EntityType entity );
 
     /**
+     * Returns the size of the repository.
+     * @return the size of the repository
+     */
+    int size();
+
+    /**
      * Updates an entity within this repository.
      *
      * @param entity the entity
      * @return the entity (useful if adding entity to repository changes the entity, e.g. creates oid)
      */
     EntityType update( EntityType entity );
-
-    /**
-     * Returns the size of the repository.
-     * @return the size of the repository
-     */
-    int size();
 }

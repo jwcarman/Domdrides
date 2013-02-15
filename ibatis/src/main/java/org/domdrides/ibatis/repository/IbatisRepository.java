@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -33,40 +34,35 @@ import java.util.Set;
 public class    IbatisRepository<EntityType extends Entity<IdType>, IdType extends Serializable> extends
         SqlMapClientDaoSupport implements Repository<EntityType, IdType>
 {
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // Fields
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
-    private String addId;
-    private String getAllId;
-    private String getByIdId;
-    private String removeId;
-    private String updateId;
-    private String sizeId;
+    public static final String ADD_MAP_ID = "add";
+    public static final String GET_ALL_MAP_ID = "getAll";
+    public static final String GET_BY_ID_MAP_ID = "getById";
+    public static final String REMOVE_MAP_ID = "remove";
+    public static final String UPDATE_MAP_ID = "update";
+    public static final String SIZE_MAP_ID = "size";
+    private final Class<EntityType> entityClass;
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // Constructors
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     public IbatisRepository( Class<EntityType> entityClass )
     {
-        final String simpleName = entityClass.getSimpleName();
-        this.addId = simpleName + ".add";
-        this.removeId = simpleName + ".remove";
-        this.updateId = simpleName + ".update";
-        this.getByIdId = simpleName + ".getById";
-        this.getAllId = simpleName + ".getAll";
-        this.sizeId = simpleName + ".size";
+        this.entityClass = entityClass;
     }
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // Repository Implementation
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     @Transactional()
     public EntityType add( EntityType entity )
     {
-        getSqlMapClientTemplate().insert(addId, entity);
+        getSqlMapClientTemplate().insert(getMapId(ADD_MAP_ID), entity);
         return entity;
     }
 
@@ -77,99 +73,57 @@ public class    IbatisRepository<EntityType extends Entity<IdType>, IdType exten
     }
 
     @Transactional( readOnly = true )
-    @SuppressWarnings( "unchecked" )
     public Set<EntityType> getAll()
     {
-        return new HashSet<EntityType>(getSqlMapClientTemplate().queryForList(getAllId));
+        List<EntityType> allEntities = getSqlMapClientTemplate().queryForList(getMapId(GET_ALL_MAP_ID));
+        return new HashSet<EntityType>(allEntities);
     }
 
     @Transactional( readOnly = true )
-    @SuppressWarnings( "unchecked" )
     public EntityType getById( IdType id )
     {
-        return ( EntityType ) getSqlMapClientTemplate().queryForObject(getByIdId, id);
+        return (EntityType)getSqlMapClientTemplate().queryForObject(getMapId(GET_BY_ID_MAP_ID), id);
     }
 
     @Transactional
     public void remove( EntityType entity )
     {
-        getSqlMapClientTemplate().delete(removeId, entity.getId());
-    }
-
-    @Transactional
-    public EntityType update( EntityType entity )
-    {
-        getSqlMapClientTemplate().update(updateId, entity);
-        return entity;
+        getSqlMapClientTemplate().delete(getMapId(REMOVE_MAP_ID), entity.getId());
     }
 
     @Transactional(readOnly = true)
     public int size()
     {
-        return ((Number)getSqlMapClientTemplate().queryForObject(sizeId)).intValue();
+        return ((Number)getSqlMapClientTemplate().queryForObject(getMapId(SIZE_MAP_ID))).intValue();
     }
 
-//**********************************************************************************************************************
-// Getter/Setter Methods
-//**********************************************************************************************************************
-
-    public String getSizeId()
+    @Transactional
+    public EntityType update( EntityType entity )
     {
-        return sizeId;
+        getSqlMapClientTemplate().update(getMapId(UPDATE_MAP_ID), entity);
+        return entity;
     }
 
-    public void setSizeId(String sizeId)
-    {
-        this.sizeId = sizeId;
-    }
+//----------------------------------------------------------------------------------------------------------------------
+// Other Methods
+//----------------------------------------------------------------------------------------------------------------------
 
-    public String getAddId()
+    /**
+     * Given a base id, pass back the fully qualified version, for instance:<br/>
+     * <br/>
+     * &lt;mapper namespace="Person"&gt;<br/>
+     * &nbsp;&nbsp;&lt;select id="findByName" ...&gt;<br/>
+     * &lt;/mapper&gt;<br/>
+     * <br/>
+     * String mapId = getMapId("findByName");<br/>
+     * //mapId will be Person.findByName
+     *
+     * @param baseMapId the namespaceless id of the query/insert mapping you wish to utilize
+     * @return
+     */
+    protected String getMapId(String baseMapId)
     {
-        return addId;
-    }
-
-    public void setAddId( String addId )
-    {
-        this.addId = addId;
-    }
-
-    public String getGetAllId()
-    {
-        return getAllId;
-    }
-
-    public void setGetAllId( String getAllId )
-    {
-        this.getAllId = getAllId;
-    }
-
-    public String getGetByIdId()
-    {
-        return getByIdId;
-    }
-
-    public void setGetByIdId( String getByIdId )
-    {
-        this.getByIdId = getByIdId;
-    }
-
-    public String getRemoveId()
-    {
-        return removeId;
-    }
-
-    public void setRemoveId( String removeId )
-    {
-        this.removeId = removeId;
-    }
-
-    public String getUpdateId()
-    {
-        return updateId;
-    }
-
-    public void setUpdateId( String updateId )
-    {
-        this.updateId = updateId;
+        final String simpleName = entityClass.getSimpleName();
+        return simpleName + "." + baseMapId;
     }
 }
