@@ -74,7 +74,6 @@
         <url>https://github.com/jwcarman/Domdrides</url>
         <connection>scm:git:git@github.com:jwcarman/Domdrides.git</connection>
         <developerConnection>scm:git:git@github.com:jwcarman/Domdrides.git</developerConnection>
-        <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
