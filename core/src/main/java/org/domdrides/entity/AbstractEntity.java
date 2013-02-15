@@ -20,7 +20,7 @@ import java.io.Serializable;
 
 /**
  * A useful superclass for implementing persistent entity classes.  The {@link #equals(Object)} and {@link #hashCode()}
- * methods are based solely on the id value and not upon any "business" properties.  
+ * methods are based solely on the id value and not upon any "business" properties.
  *
  * @author James Carman
  * @since 1.0
@@ -51,20 +51,20 @@ public abstract class AbstractEntity<IdType extends Serializable> implements Ent
 // Entity Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
-    public boolean equals( Object o )
+    public boolean equals(Object o)
     {
-        if( this == o )
+        if (this == o)
         {
             return true;
         }
-        if( !( o instanceof AbstractEntity ) )
+        if (!(o instanceof AbstractEntity))
         {
             return false;
         }
 
-        AbstractEntity that = ( AbstractEntity ) o;
+        AbstractEntity that = (AbstractEntity) o;
 
-        return !( id != null ? !id.equals(that.id) : that.id != null );
+        return !(id != null ? !id.equals(that.id) : that.id != null);
     }
 
     public IdType getId()
@@ -76,7 +76,7 @@ public abstract class AbstractEntity<IdType extends Serializable> implements Ent
 // Getter/Setter Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected void setId( IdType id )
+    protected void setId(IdType id)
     {
         this.id = id;
     }
@@ -87,6 +87,6 @@ public abstract class AbstractEntity<IdType extends Serializable> implements Ent
 
     public int hashCode()
     {
-        return ( id != null ? id.hashCode() : 0 );
+        return (id != null ? id.hashCode() : 0);
     }
 }

@@ -26,6 +26,6 @@
         <property name="ssn"/>
         <property name="first"/>
         <property name="last"/>
-        <many-to-one name="spouse" />
+        <many-to-one name="spouse"/>
     </class>
 </hibernate-mapping>

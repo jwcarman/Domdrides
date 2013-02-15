@@ -58,7 +58,7 @@ public abstract class JpaRepository<EntityType extends Entity<IdType>, IdType ex
     public List<EntityType> list(final int first, final int max, final String sortProperty, final boolean ascending)
     {
         final String jpaql = "select x from " + entityClass.getName() + " x order by x." + sortProperty +
-                        ( ascending ? " asc" : " desc" );
+                (ascending ? " asc" : " desc");
         final Query query = entityManager.createQuery(jpaql);
         query.setFirstResult(first).setMaxResults(max);
         return query.getResultList();
@@ -105,7 +105,7 @@ public abstract class JpaRepository<EntityType extends Entity<IdType>, IdType ex
     public int size()
     {
         List results = entityManager.createQuery("select count(*) from " + entityClass.getName()).getResultList();
-        return ((Number)results.get(0)).intValue();
+        return ((Number) results.get(0)).intValue();
     }
 
     @Transactional

@@ -17,10 +17,6 @@
 package org.domdrides.repository;
 
 import org.domdrides.entity.Person;
-import org.domdrides.repository.Repository;
-
-import java.util.List;
-import java.util.Set;
 
 /**
  * @author James Carman

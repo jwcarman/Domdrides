@@ -16,8 +16,6 @@
 
 package org.domdrides.entity;
 
-import org.domdrides.entity.UuidEntity;
-
 /**
  * @author James Carman
  * @version 1.0
@@ -39,7 +37,7 @@ public class Mammal extends UuidEntity
         return name;
     }
 
-    public void setName( String name )
+    public void setName(String name)
     {
         this.name = name;
     }

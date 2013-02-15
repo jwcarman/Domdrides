@@ -30,7 +30,7 @@ public interface Entity<IdType extends Serializable> extends Serializable
 // Canonical Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    boolean equals( Object o );
+    boolean equals(Object o);
 
     int hashCode();
 

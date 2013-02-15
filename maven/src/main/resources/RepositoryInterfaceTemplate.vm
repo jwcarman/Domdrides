@@ -7,9 +7,9 @@ import ${idType.name};
 import org.domdrides.repository.Repository;
 
 /**
- * @since ${projectVersion}
- */
-public interface ${interfaceName} extends Repository<${entityClass.simpleName},${idType.simpleName}> 
+* @since ${projectVersion}
+*/
+public interface ${interfaceName} extends Repository<${entityClass.simpleName},${idType.simpleName}>
 {
 
 }

@@ -29,6 +29,6 @@ public class GenerateSchema extends JdbcDaoSupport
 
     public void init()
     {
-        getJdbcTemplate().execute("create table person (id varchar(255), first varchar(255), last varchar(255), ssn varchar(255))");   
+        getJdbcTemplate().execute("create table person (id varchar(255), first varchar(255), last varchar(255), ssn varchar(255))");
     }
 }

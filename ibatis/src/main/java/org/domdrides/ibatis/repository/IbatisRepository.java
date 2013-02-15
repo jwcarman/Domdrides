@@ -28,10 +28,10 @@ import java.util.Set;
 
 /**
  * An <a href="http://ibatis.apache.org">iBATIS</a>-based repository implementation
- *  
+ *
  * @since 1.0
  */
-public class    IbatisRepository<EntityType extends Entity<IdType>, IdType extends Serializable> extends
+public class IbatisRepository<EntityType extends Entity<IdType>, IdType extends Serializable> extends
         SqlMapClientDaoSupport implements Repository<EntityType, IdType>
 {
 //----------------------------------------------------------------------------------------------------------------------
@@ -50,7 +50,7 @@ public class    IbatisRepository<EntityType extends Entity<IdType>, IdType exten
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public IbatisRepository( Class<EntityType> entityClass )
+    public IbatisRepository(Class<EntityType> entityClass)
     {
         this.entityClass = entityClass;
     }
@@ -60,33 +60,33 @@ public class    IbatisRepository<EntityType extends Entity<IdType>, IdType exten
 //----------------------------------------------------------------------------------------------------------------------
 
     @Transactional()
-    public EntityType add( EntityType entity )
+    public EntityType add(EntityType entity)
     {
         getSqlMapClientTemplate().insert(getMapId(ADD_MAP_ID), entity);
         return entity;
     }
 
-    @Transactional( readOnly = true )
-    public boolean contains( EntityType entity )
+    @Transactional(readOnly = true)
+    public boolean contains(EntityType entity)
     {
         return getById(entity.getId()) != null;
     }
 
-    @Transactional( readOnly = true )
+    @Transactional(readOnly = true)
     public Set<EntityType> getAll()
     {
         List<EntityType> allEntities = getSqlMapClientTemplate().queryForList(getMapId(GET_ALL_MAP_ID));
         return new HashSet<EntityType>(allEntities);
     }
 
-    @Transactional( readOnly = true )
-    public EntityType getById( IdType id )
+    @Transactional(readOnly = true)
+    public EntityType getById(IdType id)
     {
-        return (EntityType)getSqlMapClientTemplate().queryForObject(getMapId(GET_BY_ID_MAP_ID), id);
+        return (EntityType) getSqlMapClientTemplate().queryForObject(getMapId(GET_BY_ID_MAP_ID), id);
     }
 
     @Transactional
-    public void remove( EntityType entity )
+    public void remove(EntityType entity)
     {
         getSqlMapClientTemplate().delete(getMapId(REMOVE_MAP_ID), entity.getId());
     }
@@ -94,11 +94,11 @@ public class    IbatisRepository<EntityType extends Entity<IdType>, IdType exten
     @Transactional(readOnly = true)
     public int size()
     {
-        return ((Number)getSqlMapClientTemplate().queryForObject(getMapId(SIZE_MAP_ID))).intValue();
+        return ((Number) getSqlMapClientTemplate().queryForObject(getMapId(SIZE_MAP_ID))).intValue();
     }
 
     @Transactional
-    public EntityType update( EntityType entity )
+    public EntityType update(EntityType entity)
     {
         getSqlMapClientTemplate().update(getMapId(UPDATE_MAP_ID), entity);
         return entity;

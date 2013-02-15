@@ -23,19 +23,31 @@
     <body>
         <section name="Introduction">
             <p>
-                Eric Evans' book <u>Domain-Driven Design: Tackling Complexity in the Heart of Software</u> prescribes a
-                domain-driven approach to designing object-oriented software.  The Domdrides library tries to help
-                facilitate this design approach for projects written in Java.  Currently, Domdrides helps with the
+                Eric Evans' book
+                <u>Domain-Driven Design: Tackling Complexity in the Heart of Software</u>
+                prescribes a
+                domain-driven approach to designing object-oriented software. The Domdrides library tries to help
+                facilitate this design approach for projects written in Java. Currently, Domdrides helps with the
                 following domain-driven design concepts:
             </p>
             <ul>
-                <li><b>Entities</b> - an entity is a persistent object in your domain model such as a Person or an
-                Account.  Domdrides provides useful base classes for implementing entities.</li>
-                <li><b>Repositories</b> - a repository contains entities of a specific type.  For example, you might
-                have a PersonRepository or AccountRepository in your domain model.  Implementations for
-                    <a href="domdrides-hibernate/apidocs/org/domdrides/hibernate/repository/HibernateRepository.html">Hibernate</a>,
-                    <a href="domdrides-jpa/apidocs/org/domdrides/jpa/repository/JpaRepository.html">The Java Persistence API (JPA)</a>
-                    , and <a href="domdrides-ibatis/apidocs/org/domdrides/ibatis/repository/IbatisRepository.html">iBATIS</a> are
+                <li>
+                    <b>Entities</b>
+                    - an entity is a persistent object in your domain model such as a Person or an
+                    Account. Domdrides provides useful base classes for implementing entities.
+                </li>
+                <li>
+                    <b>Repositories</b>
+                    - a repository contains entities of a specific type. For example, you might
+                    have a PersonRepository or AccountRepository in your domain model. Implementations for
+                    <a href="domdrides-hibernate/apidocs/org/domdrides/hibernate/repository/HibernateRepository.html">
+                        Hibernate</a>,
+                    <a href="domdrides-jpa/apidocs/org/domdrides/jpa/repository/JpaRepository.html">The Java Persistence
+                        API (JPA)
+                    </a>
+                    , and
+                    <a href="domdrides-ibatis/apidocs/org/domdrides/ibatis/repository/IbatisRepository.html">iBATIS</a>
+                    are
                     available for you to extend.
                 </li>
             </ul>

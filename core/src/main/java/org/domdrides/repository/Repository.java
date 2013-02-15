@@ -41,7 +41,7 @@ public interface Repository<EntityType extends Entity<IdType>, IdType extends Se
      * @param entity the entity
      * @return the entity (useful if adding entity to repository changes the entity, e.g. creates oid)
      */
-    EntityType add( EntityType entity );
+    EntityType add(EntityType entity);
 
     /**
      * Returns whether or not the entity is contained within the repository.
@@ -49,7 +49,7 @@ public interface Repository<EntityType extends Entity<IdType>, IdType extends Se
      * @param entity the entity
      * @return whether or not the entity is contained within the repository
      */
-    boolean contains( EntityType entity );
+    boolean contains(EntityType entity);
 
     /**
      * Returns all entities in this repository as a set.
@@ -64,17 +64,18 @@ public interface Repository<EntityType extends Entity<IdType>, IdType extends Se
      * @param id the id
      * @return the entity with the given id
      */
-    EntityType getById( IdType id );
+    EntityType getById(IdType id);
 
     /**
      * Removes the entity from this repository.
      *
      * @param entity the entity
      */
-    void remove( EntityType entity );
+    void remove(EntityType entity);
 
     /**
      * Returns the size of the repository.
+     *
      * @return the size of the repository
      */
     int size();
@@ -85,5 +86,5 @@ public interface Repository<EntityType extends Entity<IdType>, IdType extends Se
      * @param entity the entity
      * @return the entity (useful if adding entity to repository changes the entity, e.g. creates oid)
      */
-    EntityType update( EntityType entity );
+    EntityType update(EntityType entity);
 }

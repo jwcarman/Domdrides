@@ -16,10 +16,9 @@
 
 package org.domdrides.entity;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertNotNull;
 import org.testng.annotations.Test;
+
+import static org.testng.Assert.*;
 
 /**
  * @author James Carman

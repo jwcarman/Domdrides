@@ -18,10 +18,9 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
-                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+
                            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
@@ -32,12 +31,12 @@
 
     <!-- so long as the dataSource used in the Spring txManager is the same as here, it will be utilized -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="dataSource" />
-        <property name="mapperLocations" value="classpath*:sqlmap/Person.map.xml" />
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations" value="classpath*:sqlmap/Person.map.xml"/>
     </bean>
 
     <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
-        <constructor-arg index="0" ref="sqlSessionFactory" />
+        <constructor-arg index="0" ref="sqlSessionFactory"/>
     </bean>
 
     <bean id="dataSource"
@@ -52,13 +51,13 @@
 
     <bean id="repositoryParent" class="org.domdrides.mybatis.repository.MybatisRepository"
           abstract="true">
-        <property name="sqlSessionTemplate" ref="sqlSession" />
+        <property name="sqlSessionTemplate" ref="sqlSession"/>
     </bean>
 
     <bean id="generateSchema" class="org.domdrides.mybatis.util.GenerateSchema" init-method="init">
-        <property name="dataSource" ref="dataSource" />
+        <property name="dataSource" ref="dataSource"/>
     </bean>
-    
+
     <bean id="personRepository" class="org.domdrides.mybatis.repository.MybatisPersonRepository"
-            parent="repositoryParent"/>
+          parent="repositoryParent"/>
 </beans>

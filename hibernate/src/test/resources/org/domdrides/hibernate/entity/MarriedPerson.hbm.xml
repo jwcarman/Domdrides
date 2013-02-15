@@ -29,7 +29,7 @@
         <property name="first"/>
         <property name="last"/>
         <subclass name="org.domdrides.hibernate.entity.MarriedPerson" discriminator-value="MarriedPerson">
-            <many-to-one name="spouse" />
+            <many-to-one name="spouse"/>
         </subclass>
     </class>
 </hibernate-mapping>

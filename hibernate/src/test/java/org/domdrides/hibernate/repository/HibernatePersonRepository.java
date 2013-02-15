@@ -71,7 +71,7 @@ public class HibernatePersonRepository extends HibernateRepository<Person, Strin
     }
 
     @Transactional(readOnly = true)
-    public Person getByIdUsingQuery( String id )
+    public Person getByIdUsingQuery(String id)
     {
         final Query q = getSession(false).createQuery("select x from Person x where x.id = :id");
         q.setString("id", id);

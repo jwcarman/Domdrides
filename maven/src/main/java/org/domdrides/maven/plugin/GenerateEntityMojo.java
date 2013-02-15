@@ -22,7 +22,6 @@ import org.apache.velocity.VelocityContext;
 
 /**
  * @goal generate-entity
- *
  */
 public class GenerateEntityMojo extends AbstractGeneratorMojo
 {
@@ -57,7 +56,7 @@ public class GenerateEntityMojo extends AbstractGeneratorMojo
             ctx.put("projectVersion", getProjectVersion());
             generateSourceFile("EntityTemplate.vm", ctx, entityPackage + "." + entityName);
         }
-        catch( Exception e )
+        catch (Exception e)
         {
             throw new MojoExecutionException("Unable to generate source file.", e);
         }
@@ -72,7 +71,7 @@ public class GenerateEntityMojo extends AbstractGeneratorMojo
         return entityName;
     }
 
-    public void setEntityName( String entityName )
+    public void setEntityName(String entityName)
     {
         this.entityName = entityName;
     }
@@ -82,7 +81,7 @@ public class GenerateEntityMojo extends AbstractGeneratorMojo
         return superClass;
     }
 
-    public void setSuperClass( String superClass )
+    public void setSuperClass(String superClass)
     {
         this.superClass = superClass;
     }

@@ -23,7 +23,7 @@ import org.springframework.test.context.ContextConfiguration;
  * @author James Carman
  * @since 1.0
  */
-@ContextConfiguration( locations = "TestJpaRepository.xml" )
+@ContextConfiguration(locations = "TestJpaRepository.xml")
 public class TestJpaRepository extends PageableRepositoryTestCase
 {
 }

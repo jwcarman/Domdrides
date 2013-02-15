@@ -16,13 +16,13 @@
 
 package org.domdrides.ibatis.repository;
 
-import org.springframework.test.context.ContextConfiguration;
 import org.domdrides.repository.RepositoryTestCase;
+import org.springframework.test.context.ContextConfiguration;
 
 /**
  *
  */
-@ContextConfiguration( locations = "TestIbatisRepository.xml" )
+@ContextConfiguration(locations = "TestIbatisRepository.xml")
 public class TestIbatisRepository extends RepositoryTestCase
 {
 }

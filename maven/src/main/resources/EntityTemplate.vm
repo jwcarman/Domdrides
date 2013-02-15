@@ -3,9 +3,9 @@ package ${packageName};
 import ${superClass.name};
 
 /**
- * @since ${projectVersion}
- */
+* @since ${projectVersion}
+*/
 public class ${entityName} extends ${superClass.simpleName}
 {
-  
+
 }

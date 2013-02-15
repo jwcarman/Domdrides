@@ -16,14 +16,14 @@
 
 package org.domdrides.example.repository.hibernate;
 
-import org.domdrides.hibernate.repository.HibernateRepository;
 import org.domdrides.example.entity.Person;
 import org.domdrides.example.repository.PersonRepository;
+import org.domdrides.hibernate.repository.HibernateRepository;
 
 /**
  * A hibernate-based implementation of a person repository.
  */
-public class HibernatePersonRepository extends HibernateRepository<Person,String> implements PersonRepository
+public class HibernatePersonRepository extends HibernateRepository<Person, String> implements PersonRepository
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors

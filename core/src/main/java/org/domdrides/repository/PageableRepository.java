@@ -26,7 +26,7 @@ import java.util.List;
  *
  * @since 1.1
  */
-public interface PageableRepository<EntityType extends Entity<IdType>, IdType extends Serializable> extends Repository<EntityType,IdType>
+public interface PageableRepository<EntityType extends Entity<IdType>, IdType extends Serializable> extends Repository<EntityType, IdType>
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Other Methods
@@ -34,10 +34,11 @@ public interface PageableRepository<EntityType extends Entity<IdType>, IdType ex
 
     /**
      * Returns one page of data from this repository.
-     * @param first the first entity to return
-     * @param max the maximum number of entities to return
+     *
+     * @param first        the first entity to return
+     * @param max          the maximum number of entities to return
      * @param sortProperty the property to sort by
-     * @param ascending whether or not the sorting is asceding
+     * @param ascending    whether or not the sorting is asceding
      * @return one page of data from this repository
      */
     List<EntityType> list(int first, int max, String sortProperty, boolean ascending);

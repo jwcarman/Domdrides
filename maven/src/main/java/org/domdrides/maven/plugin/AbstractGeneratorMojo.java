@@ -18,23 +18,22 @@ package org.domdrides.maven.plugin;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.velocity.VelocityContext;
 import org.apache.velocity.Template;
-import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
+import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.util.List;
-import java.util.LinkedList;
-import java.util.Properties;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.net.MalformedURLException;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Properties;
 
 /**
  * @requiresDependencyResolution runtime
- *
  */
 public abstract class AbstractGeneratorMojo extends AbstractMojo
 {
@@ -76,7 +75,7 @@ public abstract class AbstractGeneratorMojo extends AbstractMojo
         return basePackage;
     }
 
-    public void setBasePackage( String basePackage )
+    public void setBasePackage(String basePackage)
     {
         this.basePackage = basePackage;
     }
@@ -86,14 +85,14 @@ public abstract class AbstractGeneratorMojo extends AbstractMojo
         return classpathElements;
     }
 
-    public void setClasspathElements( List<String> classpathElements )
+    public void setClasspathElements(List<String> classpathElements)
     {
         this.classpathElements = classpathElements;
     }
 
     private ClassLoader getEnclosingProjectClassLoader() throws MojoExecutionException
     {
-        if( enclosingProjectClassLoader == null )
+        if (enclosingProjectClassLoader == null)
         {
             enclosingProjectClassLoader = createClassLoader();
         }
@@ -105,14 +104,14 @@ public abstract class AbstractGeneratorMojo extends AbstractMojo
         try
         {
             final List<URL> urls = new LinkedList<URL>();
-            for( String classpathElement : classpathElements )
+            for (String classpathElement : classpathElements)
             {
                 final File file = new File(classpathElement);
                 urls.add(file.toURL());
             }
             return new URLClassLoader(urls.toArray(new URL[urls.size()]), ClassLoader.getSystemClassLoader());
         }
-        catch( MalformedURLException e )
+        catch (MalformedURLException e)
         {
             throw new MojoExecutionException("Invalid classpath element.", e);
         }
@@ -123,7 +122,7 @@ public abstract class AbstractGeneratorMojo extends AbstractMojo
         return srcDirectory;
     }
 
-    public void setSrcDirectory( File srcDirectory )
+    public void setSrcDirectory(File srcDirectory)
     {
         this.srcDirectory = srcDirectory;
     }
@@ -143,13 +142,13 @@ public abstract class AbstractGeneratorMojo extends AbstractMojo
             engine.init();
             return engine;
         }
-        catch( Exception e )
+        catch (Exception e)
         {
             throw new MojoExecutionException("Unable to initialize velocity context.", e);
         }
     }
 
-    protected void generateSourceFile( String templateName, VelocityContext context, String className )
+    protected void generateSourceFile(String templateName, VelocityContext context, String className)
             throws MojoExecutionException
     {
         try
@@ -163,19 +162,19 @@ public abstract class AbstractGeneratorMojo extends AbstractMojo
             template.merge(context, fw);
             fw.close();
         }
-        catch( Exception e )
+        catch (Exception e)
         {
             throw new MojoExecutionException("Unable to generate source file for class " + className + ".", e);
         }
     }
 
-    protected Class getClass( String name ) throws MojoExecutionException
+    protected Class getClass(String name) throws MojoExecutionException
     {
         try
         {
             return getEnclosingProjectClassLoader().loadClass(name);
         }
-        catch( ClassNotFoundException e )
+        catch (ClassNotFoundException e)
         {
             throw new MojoExecutionException("Class " + name + " not found!", e);
         }

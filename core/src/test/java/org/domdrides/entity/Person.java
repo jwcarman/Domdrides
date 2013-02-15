@@ -42,7 +42,7 @@ public class Person extends UuidEntity
         return first;
     }
 
-    public void setFirst( String first )
+    public void setFirst(String first)
     {
         this.first = first;
     }
@@ -52,7 +52,7 @@ public class Person extends UuidEntity
         return last;
     }
 
-    public void setLast( String last )
+    public void setLast(String last)
     {
         this.last = last;
     }
@@ -73,7 +73,7 @@ public class Person extends UuidEntity
         return ssn;
     }
 
-    public void setSsn( String ssn )
+    public void setSsn(String ssn)
     {
         this.ssn = ssn;
     }

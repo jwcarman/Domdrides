@@ -22,6 +22,6 @@ import org.domdrides.repository.Repository;
 /**
  * A repository for {@link Person} objects.
  */
-public interface PersonRepository extends Repository<Person,String>
+public interface PersonRepository extends Repository<Person, String>
 {
 }

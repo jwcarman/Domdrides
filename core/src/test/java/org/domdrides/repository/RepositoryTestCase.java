@@ -20,11 +20,6 @@ import org.domdrides.entity.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PropertyComparator;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertNull;
-import static org.testng.Assert.assertTrue;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
@@ -32,10 +27,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import static org.testng.Assert.*;
+
 /**
  * A test harness to test the {@link Repository} "contract"
- * 
- *
  */
 public abstract class RepositoryTestCase extends AbstractTransactionalTestNGSpringContextTests
 {
@@ -50,7 +45,7 @@ public abstract class RepositoryTestCase extends AbstractTransactionalTestNGSpri
 //----------------------------------------------------------------------------------------------------------------------
 
     @Autowired
-    public void setPersonRepository( PersonRepository personRepository )
+    public void setPersonRepository(PersonRepository personRepository)
     {
         this.personRepository = personRepository;
     }
@@ -59,15 +54,15 @@ public abstract class RepositoryTestCase extends AbstractTransactionalTestNGSpri
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected List<Person> addPersonsToRepository( int n )
+    protected List<Person> addPersonsToRepository(int n)
     {
         return addPersonsToRepository(n, "First", "Last", "SSN");
     }
 
-    protected List<Person> addPersonsToRepository( int n, String firstPrefix, String lastPrefix, String ssnPrefix )
+    protected List<Person> addPersonsToRepository(int n, String firstPrefix, String lastPrefix, String ssnPrefix)
     {
         final List<Person> original = new ArrayList<Person>(n);
-        for( int i = 0; i < n; ++i )
+        for (int i = 0; i < n; ++i)
         {
             final Person p = new Person();
             p.setFirst(firstPrefix + i);
@@ -78,14 +73,14 @@ public abstract class RepositoryTestCase extends AbstractTransactionalTestNGSpri
         }
         return original;
     }
-    
-    protected void assertCollectionsSame( Collection<Person> expected, Collection<Person> actual )
+
+    protected void assertCollectionsSame(Collection<Person> expected, Collection<Person> actual)
     {
         assertEquals(createSortedPersonList(expected), createSortedPersonList(actual));
     }
 
-    @SuppressWarnings( "unchecked" )
-    private List<Person> createSortedPersonList( Collection<Person> people )
+    @SuppressWarnings("unchecked")
+    private List<Person> createSortedPersonList(Collection<Person> people)
     {
         final List<Person> list = new ArrayList<Person>(people);
         Collections.sort(list, new PropertyComparator("ssn", true, true));
@@ -118,7 +113,7 @@ public abstract class RepositoryTestCase extends AbstractTransactionalTestNGSpri
     }
 
     @Test
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public void testGetAll()
     {
         assertCollectionsSame(addPersonsToRepository(10), personRepository.getAll());

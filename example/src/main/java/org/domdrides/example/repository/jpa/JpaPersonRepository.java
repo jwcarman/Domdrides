@@ -23,7 +23,7 @@ import org.domdrides.jpa.repository.JpaRepository;
 /**
  * A JPA-based implementation of a person repository.
  */
-public class JpaPersonRepository extends JpaRepository<Person,String> implements PersonRepository
+public class JpaPersonRepository extends JpaRepository<Person, String> implements PersonRepository
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors

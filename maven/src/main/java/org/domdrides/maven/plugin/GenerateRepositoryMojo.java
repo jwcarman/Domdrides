@@ -115,7 +115,8 @@ public class GenerateRepositoryMojo extends AbstractGeneratorMojo
         {
             TypeVariable typeVariable = (TypeVariable) type;
             return findTypeBoundToVariable(c, typeVariable);
-        } else if (type instanceof Class)
+        }
+        else if (type instanceof Class)
         {
             return (Class) type;
         }

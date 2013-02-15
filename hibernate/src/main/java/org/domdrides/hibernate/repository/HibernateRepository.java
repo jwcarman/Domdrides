@@ -20,12 +20,12 @@ import org.domdrides.entity.Entity;
 import org.domdrides.repository.PageableRepository;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
-import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ import java.util.Set;
 
 /**
  * A <a href="http://www.hibernate.org">Hibernate</a>-based repository implementation.
- * 
+ *
  * @author James Carman
  * @since 1.0
  */
@@ -70,18 +70,19 @@ public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdT
 
     /**
      * Returns one page of data from this repository.
-     * @param first the first entity to return
-     * @param max the maximum number of entities to return
+     *
+     * @param first        the first entity to return
+     * @param max          the maximum number of entities to return
      * @param sortProperty the property to sort by
-     * @param ascending whether or not the sorting is asceding
+     * @param ascending    whether or not the sorting is asceding
      * @return one page of data from this repository
      */
     @Transactional(readOnly = true)
     public List<EntityType> list(int first, int max, String sortProperty, boolean ascending)
     {
         Criteria c = createCriteria()
-                    .setMaxResults(max)
-                    .setFirstResult(first);
+                .setMaxResults(max)
+                .setFirstResult(first);
         final int ndx = sortProperty.lastIndexOf('.');
         if (ndx != -1)
         {
@@ -135,7 +136,7 @@ public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdT
     @Transactional(readOnly = true)
     public int size()
     {
-        return ((Number)createCriteria().setProjection(Projections.count("id")).uniqueResult()).intValue();
+        return ((Number) createCriteria().setProjection(Projections.count("id")).uniqueResult()).intValue();
     }
 
     @Transactional

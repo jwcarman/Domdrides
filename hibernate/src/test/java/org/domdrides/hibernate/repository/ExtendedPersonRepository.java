@@ -16,8 +16,8 @@
 
 package org.domdrides.hibernate.repository;
 
-import org.domdrides.repository.PersonRepository;
 import org.domdrides.entity.Person;
+import org.domdrides.repository.PersonRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -42,5 +42,5 @@ public interface ExtendedPersonRepository extends PersonRepository
     Set<Person> getAllAsSetByQuery();
 
     @Transactional(readOnly = true)
-    Person getByIdUsingQuery( String id );
+    Person getByIdUsingQuery(String id);
 }

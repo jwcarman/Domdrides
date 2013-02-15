@@ -19,8 +19,9 @@ package org.domdrides.hibernate.repository;
 import org.domdrides.entity.Person;
 import org.domdrides.repository.PageableRepositoryTestCase;
 import org.springframework.test.context.ContextConfiguration;
-import static org.testng.Assert.assertSame;
 import org.testng.annotations.Test;
+
+import static org.testng.Assert.assertSame;
 
 /**
  *

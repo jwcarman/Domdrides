@@ -19,14 +19,12 @@ package org.domdrides.repository;
 import org.domdrides.entity.Person;
 import org.testng.annotations.Test;
 
-import java.util.List;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * A test harness to test the {@link PageableRepository} "contract"
- *
- *
  */
 
 public abstract class PageableRepositoryTestCase extends RepositoryTestCase
@@ -50,8 +48,8 @@ public abstract class PageableRepositoryTestCase extends RepositoryTestCase
             }
         });
         // Test ascending sorts...
-        final PageableRepository<Person,String> pageablePersonRepository = (PageableRepository<Person,String>)personRepository;
-        for(int pageNumber = 0; pageNumber < nPages; ++pageNumber)
+        final PageableRepository<Person, String> pageablePersonRepository = (PageableRepository<Person, String>) personRepository;
+        for (int pageNumber = 0; pageNumber < nPages; ++pageNumber)
         {
             final List<Person> actual = pageablePersonRepository.list(pageNumber * pageSize, pageSize, "last", true);
             final List<Person> expected = allPeople.subList(pageNumber * pageSize, (pageNumber + 1) * pageSize);
@@ -59,7 +57,7 @@ public abstract class PageableRepositoryTestCase extends RepositoryTestCase
         }
         // Test descending sorts too...
         Collections.reverse(allPeople);
-        for(int pageNumber = 0; pageNumber < nPages; ++pageNumber)
+        for (int pageNumber = 0; pageNumber < nPages; ++pageNumber)
         {
             final List<Person> actual = pageablePersonRepository.list(pageNumber * pageSize, pageSize, "last", false);
             final List<Person> expected = allPeople.subList(pageNumber * pageSize, (pageNumber + 1) * pageSize);
@@ -71,7 +69,7 @@ public abstract class PageableRepositoryTestCase extends RepositoryTestCase
     @SuppressWarnings("unchecked")
     public void testListWithNestedPropertySort()
     {
-        ((PageableRepository<Person,String>)personRepository).list(0, 10, "spouse.last", true);
-        ((PageableRepository<Person,String>)personRepository).list(0, 10, "spouse.first", false);
+        ((PageableRepository<Person, String>) personRepository).list(0, 10, "spouse.last", true);
+        ((PageableRepository<Person, String>) personRepository).list(0, 10, "spouse.first", false);
     }
 }

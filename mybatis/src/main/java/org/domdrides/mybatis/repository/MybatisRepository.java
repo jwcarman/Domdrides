@@ -28,7 +28,7 @@ import java.util.Set;
 
 /**
  * An <a href="http://mybatis.org">myBATIS</a>-based repository implementation
- *  
+ *
  * @since 1.7
  */
 public class MybatisRepository<EntityType extends Entity<IdType>, IdType extends Serializable> extends
@@ -60,33 +60,33 @@ public class MybatisRepository<EntityType extends Entity<IdType>, IdType extends
 //----------------------------------------------------------------------------------------------------------------------
 
     @Transactional()
-    public EntityType add( EntityType entity )
+    public EntityType add(EntityType entity)
     {
         getSqlSession().insert(getMapId(ADD_MAP_ID), entity);
         return entity;
     }
 
-    @Transactional( readOnly = true )
-    public boolean contains( EntityType entity )
+    @Transactional(readOnly = true)
+    public boolean contains(EntityType entity)
     {
         return getById(entity.getId()) != null;
     }
 
-    @Transactional( readOnly = true )
+    @Transactional(readOnly = true)
     public Set<EntityType> getAll()
     {
         List<EntityType> allEntities = getSqlSession().selectList(getMapId(GET_ALL_MAP_ID));
         return new HashSet<EntityType>(allEntities);
     }
 
-    @Transactional( readOnly = true )
-    public EntityType getById( IdType id )
+    @Transactional(readOnly = true)
+    public EntityType getById(IdType id)
     {
         return getSqlSession().selectOne(getMapId(GET_BY_ID_MAP_ID), id);
     }
 
     @Transactional
-    public void remove( EntityType entity )
+    public void remove(EntityType entity)
     {
         getSqlSession().delete(getMapId(REMOVE_MAP_ID), entity.getId());
     }
@@ -94,11 +94,11 @@ public class MybatisRepository<EntityType extends Entity<IdType>, IdType extends
     @Transactional(readOnly = true)
     public int size()
     {
-        return ((Number)getSqlSession().selectOne(getMapId(SIZE_MAP_ID))).intValue();
+        return ((Number) getSqlSession().selectOne(getMapId(SIZE_MAP_ID))).intValue();
     }
 
     @Transactional
-    public EntityType update( EntityType entity )
+    public EntityType update(EntityType entity)
     {
         getSqlSession().update(getMapId(UPDATE_MAP_ID), entity);
         return entity;

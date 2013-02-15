@@ -23,6 +23,7 @@ import org.springframework.stereotype.Repository;
 /**
  * A <a href="http://java.sun.com/javaee/technologies/persistence.jsp">Java Persistence API</a>-based
  * repository implementation.
+ *
  * @author James Carman
  * @since 1.0
  */

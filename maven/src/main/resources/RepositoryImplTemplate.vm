@@ -5,12 +5,12 @@ import ${implSuperclass.name};
 import ${interfacePackageName}.${interfaceName};
 
 /**
- * @since ${projectVersion}
- */
+* @since ${projectVersion}
+*/
 public class ${implClassName} extends ${implSuperclass.simpleName}<${entityClass.simpleName},${idType.simpleName}> implements ${interfaceName}
 {
-    public ${implClassName}()
-    {
-      super(${entityClass.simpleName}.class);
-    }
+public ${implClassName}()
+{
+super(${entityClass.simpleName}.class);
+}
 }
