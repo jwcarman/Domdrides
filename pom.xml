@@ -8,7 +8,7 @@
     <groupId>org.domdrides</groupId>
     <artifactId>domdrides</artifactId>
     <packaging>pom</packaging>
-    <version>1.8</version>
+    <version>1.9-SNAPSHOT</version>
     <name>Domdrides</name>
     <description>A DOMain-DRIven DESign Library for Java</description>
     <url>http://domdrides.sourceforge.net</url>
@@ -73,7 +73,7 @@
         <url>https://github.com/jwcarman/Domdrides</url>
         <connection>scm:git:git@github.com:jwcarman/Domdrides.git</connection>
         <developerConnection>scm:git:git@github.com:jwcarman/Domdrides.git</developerConnection>
-      <tag>domdrides-1.8</tag>
+      <tag>HEAD</tag>
   </scm>
 
     <distributionManagement>
