@@ -38,6 +38,7 @@ public class MybatisRepository<EntityType extends Entity<IdType>, IdType extends
 // Fields
 //**********************************************************************************************************************
 
+    private Class<EntityType> entityClass;
     private String addId;
     private String getAllId;
     private String getByIdId;
@@ -51,6 +52,7 @@ public class MybatisRepository<EntityType extends Entity<IdType>, IdType extends
 
     public MybatisRepository(Class<EntityType> entityClass)
     {
+        this.entityClass = entityClass;
         final String simpleName = entityClass.getSimpleName();
         this.addId = simpleName + ".add";
         this.removeId = simpleName + ".remove";
@@ -60,6 +62,28 @@ public class MybatisRepository<EntityType extends Entity<IdType>, IdType extends
         this.sizeId = simpleName + ".size";
     }
 
+//**********************************************************************************************************************
+// Helper methods
+//**********************************************************************************************************************
+
+    /**
+     * Given a base id, pass back the fully qualified version, for instance:<br/>
+     * <br/>
+     * &lt;mapper namespace="Person"&gt;<br/>
+     * &nbsp;&nbsp;&lt;select id="findByName" ...&gt;<br/>
+     * &lt;/mapper&gt;<br/>
+     * <br/>
+     * String mapId = getMapId("findByName");<br/>
+     * //mapId will be Person.findByName
+     *
+     * @param baseMapId the namespaceless id of the query/insert mapping you wish to utilize
+     * @return
+     */
+    public String getMapId(String baseMapId) {
+        final String simpleName = entityClass.getSimpleName();
+        return simpleName + "." + baseMapId;
+    }
+    
 //**********************************************************************************************************************
 // Repository Implementation
 //**********************************************************************************************************************
