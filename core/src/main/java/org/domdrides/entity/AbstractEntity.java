@@ -86,14 +86,7 @@ public abstract class AbstractEntity<I extends Serializable> implements Entity<I
 
         AbstractEntity that = (AbstractEntity) o;
 
-        if (id != null)
-        {
-            return id.equals(that.id);
-        }
-        else
-        {
-            return that.id == null;
-        }
+        return !(id != null ? !id.equals(that.id) : that.id != null);
     }
 
     @Override
