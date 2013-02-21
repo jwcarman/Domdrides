@@ -62,6 +62,8 @@ public class TestAbstractEntity
         final Mammal m2 = new Mammal();
         m2.setId("1");
         assertEquals(m1.hashCode(), m2.hashCode(), "Entities of the same type with the same id should have the same hashCode.");
+        m1.setId(null);
+        assertEquals(m1.hashCode(), 0, "Entities with no id should have a 0 hashCode().");
     }
 
     @Test
