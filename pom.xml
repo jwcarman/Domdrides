@@ -27,7 +27,6 @@
         <module>jpa</module>
         <module>ibatis</module>
         <module>mybatis</module>
-        <module>maven</module>
         <module>example</module>
     </modules>
     <properties>
