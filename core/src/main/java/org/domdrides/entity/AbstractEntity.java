@@ -51,21 +51,7 @@ public abstract class AbstractEntity<I extends Serializable> implements Entity<I
 // Entity Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
-    public boolean equals(Object o)
-    {
-        if (this == o)
-        {
-            return true;
-        }
-        if (!(o instanceof AbstractEntity))
-        {
-            return false;
-        }
 
-        AbstractEntity that = (AbstractEntity) o;
-
-        return !(id != null ? !id.equals(that.id) : that.id != null);
-    }
 
     public I getId()
     {
@@ -85,8 +71,34 @@ public abstract class AbstractEntity<I extends Serializable> implements Entity<I
 // Canonical Methods
 //----------------------------------------------------------------------------------------------------------------------
 
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (!(o instanceof AbstractEntity))
+        {
+            return false;
+        }
+
+        AbstractEntity that = (AbstractEntity) o;
+
+        if (id != null)
+        {
+            return id.equals(that.id);
+        }
+        else
+        {
+            return that.id == null;
+        }
+    }
+
+    @Override
     public int hashCode()
     {
-        return (id != null ? id.hashCode() : 0);
+        return id != null ? id.hashCode() : 0;
     }
 }

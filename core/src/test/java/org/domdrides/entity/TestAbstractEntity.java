@@ -44,6 +44,12 @@ public class TestAbstractEntity
         assertEquals(m1, c1, "Objects of the subclass with the same id should be equal.");
         assertFalse(m1.equals("Hello, World!"), "Entities shouldn't be equal to non-entities.");
         assertFalse(m1.equals(new Mammal()), "Entities with different ids should not be equal.");
+
+        final Cat c2 = new Cat();
+        c2.setId(null);
+        assertFalse(c1.equals(c2), "Entities with ids should not be equal to other entities without ids.");
+        c1.setId(null);
+        assertTrue(c1.equals(c2), "Entities with no ids of the same exact type should be equal.");
     }
 
     @Test
@@ -74,6 +80,10 @@ public class TestAbstractEntity
 
     private static class SimpleEntity extends AbstractEntity<String>
     {
-
+        @Override
+        public void setId(String id)
+        {
+            super.setId(id);
+        }
     }
 }
