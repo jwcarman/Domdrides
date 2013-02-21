@@ -25,14 +25,14 @@ import java.io.Serializable;
  * @author James Carman
  * @since 1.0
  */
-public abstract class AbstractEntity<IdType extends Serializable> implements Entity<IdType>
+public abstract class AbstractEntity<I extends Serializable> implements Entity<I>
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
     private static final long serialVersionUID = -4570499400476247966L;
-    private IdType id;
+    private I id;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
@@ -42,7 +42,7 @@ public abstract class AbstractEntity<IdType extends Serializable> implements Ent
     {
     }
 
-    protected AbstractEntity(IdType id)
+    protected AbstractEntity(I id)
     {
         this.id = id;
     }
@@ -67,7 +67,7 @@ public abstract class AbstractEntity<IdType extends Serializable> implements Ent
         return !(id != null ? !id.equals(that.id) : that.id != null);
     }
 
-    public IdType getId()
+    public I getId()
     {
         return id;
     }
@@ -76,7 +76,7 @@ public abstract class AbstractEntity<IdType extends Serializable> implements Ent
 // Getter/Setter Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected void setId(IdType id)
+    protected void setId(I id)
     {
         this.id = id;
     }

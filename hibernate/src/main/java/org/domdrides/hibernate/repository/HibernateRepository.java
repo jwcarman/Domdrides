@@ -40,7 +40,7 @@ import java.util.Set;
  * @since 1.0
  */
 @Repository
-public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdType extends Serializable> extends HibernateDaoSupport implements PageableRepository<EntityType, IdType>
+public abstract class HibernateRepository<E extends Entity<I>, I extends Serializable> extends HibernateDaoSupport implements PageableRepository<E, I>
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
@@ -48,7 +48,7 @@ public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdT
 
     public static final String UNCHECKED = "unchecked";
     private static final String ASSOCIATION_ALIAS = "sp";
-    private final Class<EntityType> entityClass;
+    private final Class<E> entityClass;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
@@ -59,7 +59,7 @@ public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdT
      *
      * @param entityClass the entity class
      */
-    protected HibernateRepository(Class<EntityType> entityClass)
+    protected HibernateRepository(Class<E> entityClass)
     {
         this.entityClass = entityClass;
     }
@@ -78,7 +78,7 @@ public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdT
      * @return one page of data from this repository
      */
     @Transactional(readOnly = true)
-    public List<EntityType> list(int first, int max, String sortProperty, boolean ascending)
+    public List<E> list(int first, int max, String sortProperty, boolean ascending)
     {
         Criteria c = createCriteria()
                 .setMaxResults(max)
@@ -103,32 +103,32 @@ public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdT
 //----------------------------------------------------------------------------------------------------------------------
 
     @Transactional()
-    public EntityType add(EntityType entity)
+    public E add(E entity)
     {
         getSession().save(entity);
         return entity;
     }
 
     @Transactional(readOnly = true)
-    public boolean contains(EntityType entity)
+    public boolean contains(E entity)
     {
         return getSession(false).get(entityClass, entity.getId()) != null;
     }
 
     @Transactional(readOnly = true)
-    public Set<EntityType> getAll()
+    public Set<E> getAll()
     {
         return set(createCriteria());
     }
 
     @Transactional(readOnly = true)
-    public EntityType getById(IdType id)
+    public E getById(I id)
     {
         return uniqueResult(createCriteria().add(Restrictions.eq("id", id)));
     }
 
     @Transactional
-    public void remove(EntityType entity)
+    public void remove(E entity)
     {
         getSession().delete(entity);
     }
@@ -140,7 +140,7 @@ public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdT
     }
 
     @Transactional
-    public EntityType update(EntityType entity)
+    public E update(E entity)
     {
         getSession().update(entity);
         return entity;
@@ -168,9 +168,9 @@ public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdT
      */
     @SuppressWarnings(UNCHECKED)
     @Transactional(readOnly = true)
-    protected List<EntityType> list(Criteria criteria)
+    protected List<E> list(Criteria criteria)
     {
-        return new ArrayList<EntityType>(criteria.list());
+        return new ArrayList<E>(criteria.list());
     }
 
     /**
@@ -181,9 +181,9 @@ public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdT
      */
     @SuppressWarnings(UNCHECKED)
     @Transactional(readOnly = true)
-    protected List<EntityType> list(Query query)
+    protected List<E> list(Query query)
     {
-        return new ArrayList<EntityType>(query.list());
+        return new ArrayList<E>(query.list());
     }
 
     /**
@@ -194,9 +194,9 @@ public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdT
      */
     @SuppressWarnings(UNCHECKED)
     @Transactional(readOnly = true)
-    protected Set<EntityType> set(Criteria criteria)
+    protected Set<E> set(Criteria criteria)
     {
-        return new HashSet<EntityType>(criteria.list());
+        return new HashSet<E>(criteria.list());
     }
 
     /**
@@ -207,9 +207,9 @@ public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdT
      */
     @SuppressWarnings(UNCHECKED)
     @Transactional(readOnly = true)
-    protected Set<EntityType> set(Query query)
+    protected Set<E> set(Query query)
     {
-        return new HashSet<EntityType>(query.list());
+        return new HashSet<E>(query.list());
     }
 
     /**
@@ -219,7 +219,7 @@ public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdT
      * @return a unique result based on the provided criteria
      */
     @Transactional(readOnly = true)
-    protected EntityType uniqueResult(Criteria criteria)
+    protected E uniqueResult(Criteria criteria)
     {
         return entityClass.cast(criteria.uniqueResult());
     }
@@ -231,7 +231,7 @@ public abstract class HibernateRepository<EntityType extends Entity<IdType>, IdT
      * @return a unique result based on the provided query
      */
     @Transactional(readOnly = true)
-    protected EntityType uniqueResult(Query query)
+    protected E uniqueResult(Query query)
     {
         return entityClass.cast(query.uniqueResult());
     }

@@ -31,8 +31,8 @@ import java.util.Set;
  *
  * @since 1.7
  */
-public class MybatisRepository<EntityType extends Entity<IdType>, IdType extends Serializable> extends
-        SqlSessionDaoSupport implements Repository<EntityType, IdType>
+public class MybatisRepository<E extends Entity<I>, I extends Serializable> extends
+        SqlSessionDaoSupport implements Repository<E, I>
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
@@ -44,13 +44,13 @@ public class MybatisRepository<EntityType extends Entity<IdType>, IdType extends
     public static final String REMOVE_MAP_ID = "remove";
     public static final String UPDATE_MAP_ID = "update";
     public static final String SIZE_MAP_ID = "size";
-    private Class<EntityType> entityClass;
+    private Class<E> entityClass;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public MybatisRepository(Class<EntityType> entityClass)
+    public MybatisRepository(Class<E> entityClass)
     {
         this.entityClass = entityClass;
     }
@@ -60,33 +60,33 @@ public class MybatisRepository<EntityType extends Entity<IdType>, IdType extends
 //----------------------------------------------------------------------------------------------------------------------
 
     @Transactional()
-    public EntityType add(EntityType entity)
+    public E add(E entity)
     {
         getSqlSession().insert(getMapId(ADD_MAP_ID), entity);
         return entity;
     }
 
     @Transactional(readOnly = true)
-    public boolean contains(EntityType entity)
+    public boolean contains(E entity)
     {
         return getById(entity.getId()) != null;
     }
 
     @Transactional(readOnly = true)
-    public Set<EntityType> getAll()
+    public Set<E> getAll()
     {
-        List<EntityType> allEntities = getSqlSession().selectList(getMapId(GET_ALL_MAP_ID));
-        return new HashSet<EntityType>(allEntities);
+        List<E> allEntities = getSqlSession().selectList(getMapId(GET_ALL_MAP_ID));
+        return new HashSet<E>(allEntities);
     }
 
     @Transactional(readOnly = true)
-    public EntityType getById(IdType id)
+    public E getById(I id)
     {
         return getSqlSession().selectOne(getMapId(GET_BY_ID_MAP_ID), id);
     }
 
     @Transactional
-    public void remove(EntityType entity)
+    public void remove(E entity)
     {
         getSqlSession().delete(getMapId(REMOVE_MAP_ID), entity.getId());
     }
@@ -98,7 +98,7 @@ public class MybatisRepository<EntityType extends Entity<IdType>, IdType extends
     }
 
     @Transactional
-    public EntityType update(EntityType entity)
+    public E update(E entity)
     {
         getSqlSession().update(getMapId(UPDATE_MAP_ID), entity);
         return entity;

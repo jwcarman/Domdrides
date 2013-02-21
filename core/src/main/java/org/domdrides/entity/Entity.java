@@ -24,7 +24,7 @@ import java.io.Serializable;
  * @author James Carman
  * @since 1.0
  */
-public interface Entity<IdType extends Serializable> extends Serializable
+public interface Entity<I extends Serializable> extends Serializable
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Canonical Methods
@@ -38,5 +38,5 @@ public interface Entity<IdType extends Serializable> extends Serializable
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    IdType getId();
+    I getId();
 }

@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Set;
 
 @Repository
-public abstract class JpaRepository<EntityType extends Entity<IdType>, IdType extends Serializable> implements PageableRepository<EntityType, IdType>
+public abstract class JpaRepository<E extends Entity<I>, I extends Serializable> implements PageableRepository<E, I>
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
@@ -38,13 +38,13 @@ public abstract class JpaRepository<EntityType extends Entity<IdType>, IdType ex
 
     @PersistenceContext
     private EntityManager entityManager;
-    private final Class<EntityType> entityClass;
+    private final Class<E> entityClass;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected JpaRepository(Class<EntityType> entityClass)
+    protected JpaRepository(Class<E> entityClass)
     {
         this.entityClass = entityClass;
     }
@@ -55,7 +55,7 @@ public abstract class JpaRepository<EntityType extends Entity<IdType>, IdType ex
 
     @Transactional(readOnly = true)
     @SuppressWarnings("unchecked")
-    public List<EntityType> list(final int first, final int max, final String sortProperty, final boolean ascending)
+    public List<E> list(final int first, final int max, final String sortProperty, final boolean ascending)
     {
         final String jpaql = "select x from " + entityClass.getName() + " x order by x." + sortProperty +
                 (ascending ? " asc" : " desc");
@@ -69,34 +69,34 @@ public abstract class JpaRepository<EntityType extends Entity<IdType>, IdType ex
 //----------------------------------------------------------------------------------------------------------------------
 
     @Transactional
-    public EntityType add(EntityType entity)
+    public E add(E entity)
     {
         entityManager.persist(entity);
         return entity;
     }
 
     @Transactional(readOnly = true)
-    public boolean contains(EntityType entity)
+    public boolean contains(E entity)
     {
         return getById(entity.getId()) != null;
     }
 
     @SuppressWarnings("unchecked")
     @Transactional(readOnly = true)
-    public Set<EntityType> getAll()
+    public Set<E> getAll()
     {
         final String jpaql = "select x from " + entityClass.getName() + " x";
         return queryForSet(jpaql);
     }
 
     @Transactional(readOnly = true)
-    public EntityType getById(IdType id)
+    public E getById(I id)
     {
         return entityManager.find(entityClass, id);
     }
 
     @Transactional
-    public void remove(EntityType entity)
+    public void remove(E entity)
     {
         entityManager.remove(entity);
     }
@@ -109,7 +109,7 @@ public abstract class JpaRepository<EntityType extends Entity<IdType>, IdType ex
     }
 
     @Transactional
-    public EntityType update(EntityType entity)
+    public E update(E entity)
     {
         return entityManager.merge(entity);
     }
@@ -118,7 +118,7 @@ public abstract class JpaRepository<EntityType extends Entity<IdType>, IdType ex
 // Getter/Setter Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected Class<EntityType> getEntityClass()
+    protected Class<E> getEntityClass()
     {
         return entityClass;
     }
@@ -134,8 +134,8 @@ public abstract class JpaRepository<EntityType extends Entity<IdType>, IdType ex
 
     @SuppressWarnings("unchecked")
     @Transactional(readOnly = true)
-    private Set<EntityType> queryForSet(String jpaql)
+    private Set<E> queryForSet(String jpaql)
     {
-        return new HashSet<EntityType>(entityManager.createQuery(jpaql).getResultList());
+        return new HashSet<E>(entityManager.createQuery(jpaql).getResultList());
     }
 }
