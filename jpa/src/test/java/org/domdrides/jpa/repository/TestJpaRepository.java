@@ -16,8 +16,13 @@
 
 package org.domdrides.jpa.repository;
 
+import org.domdrides.entity.Person;
 import org.domdrides.repository.PageableRepositoryTestCase;
 import org.springframework.test.context.ContextConfiguration;
+import org.testng.annotations.Test;
+
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
 
 /**
  * @author James Carman
@@ -26,4 +31,24 @@ import org.springframework.test.context.ContextConfiguration;
 @ContextConfiguration(locations = "TestJpaRepository.xml")
 public class TestJpaRepository extends PageableRepositoryTestCase
 {
+//----------------------------------------------------------------------------------------------------------------------
+// Other Methods
+//----------------------------------------------------------------------------------------------------------------------
+
+    private JpaRepository<Person, String> getJpaPersonRepository()
+    {
+        return ((JpaRepository<Person, String>) personRepository);
+    }
+
+    @Test
+    public void testGetEntityClass()
+    {
+        assertEquals(Person.class, getJpaPersonRepository().getEntityClass());
+    }
+
+    @Test
+    public void testGetEntityManager()
+    {
+        assertNotNull(getJpaPersonRepository().getEntityManager());
+    }
 }
