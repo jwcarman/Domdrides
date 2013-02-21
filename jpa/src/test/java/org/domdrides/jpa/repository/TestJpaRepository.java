@@ -43,12 +43,7 @@ public class TestJpaRepository extends PageableRepositoryTestCase
     @Test
     public void testGetEntityClass()
     {
-        assertEquals(Person.class, getJpaPersonRepository().getEntityClass());
+        assertEquals(new JpaPersonRepository().getEntityClass(), Person.class);
     }
 
-    @Test
-    public void testGetEntityManager()
-    {
-        assertNotNull(getJpaPersonRepository().getEntityManager());
-    }
 }

@@ -59,7 +59,7 @@ public abstract class JpaRepository<E extends Entity<I>, I extends Serializable>
     {
         final String jpaql = "select x from " + entityClass.getName() + " x order by x." + sortProperty +
                 (ascending ? " asc" : " desc");
-        final Query query = entityManager.createQuery(jpaql);
+        final Query query = getEntityManager().createQuery(jpaql);
         query.setFirstResult(first).setMaxResults(max);
         return query.getResultList();
     }
@@ -71,7 +71,7 @@ public abstract class JpaRepository<E extends Entity<I>, I extends Serializable>
     @Transactional
     public E add(E entity)
     {
-        entityManager.persist(entity);
+        getEntityManager().persist(entity);
         return entity;
     }
 
@@ -92,26 +92,26 @@ public abstract class JpaRepository<E extends Entity<I>, I extends Serializable>
     @Transactional(readOnly = true)
     public E getById(I id)
     {
-        return entityManager.find(entityClass, id);
+        return getEntityManager().find(entityClass, id);
     }
 
     @Transactional
     public void remove(E entity)
     {
-        entityManager.remove(entity);
+        getEntityManager().remove(entity);
     }
 
     @Transactional(readOnly = true)
     public int size()
     {
-        List results = entityManager.createQuery("select count(*) from " + entityClass.getName()).getResultList();
+        List results = getEntityManager().createQuery("select count(*) from " + entityClass.getName()).getResultList();
         return ((Number) results.get(0)).intValue();
     }
 
     @Transactional
     public E update(E entity)
     {
-        return entityManager.merge(entity);
+        return getEntityManager().merge(entity);
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -136,6 +136,6 @@ public abstract class JpaRepository<E extends Entity<I>, I extends Serializable>
     @Transactional(readOnly = true)
     private Set<E> queryForSet(String jpaql)
     {
-        return new HashSet<E>(entityManager.createQuery(jpaql).getResultList());
+        return new HashSet<E>(getEntityManager().createQuery(jpaql).getResultList());
     }
 }
