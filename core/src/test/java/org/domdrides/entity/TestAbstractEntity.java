@@ -50,6 +50,8 @@ public class TestAbstractEntity
         assertFalse(c1.equals(c2), "Entities with ids should not be equal to other entities without ids.");
         c1.setId(null);
         assertTrue(c1.equals(c2), "Entities with no ids of the same exact type should be equal.");
+        c2.setId("2");
+        assertFalse(c1.equals(c2), "Entities with no id should not be equal to entities with ids.");
     }
 
     @Test
