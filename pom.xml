@@ -27,7 +27,6 @@
         <module>jpa</module>
         <module>ibatis</module>
         <module>mybatis</module>
-        <module>example</module>
     </modules>
     <properties>
         <hibernate.version>3.3.2.GA</hibernate.version>
