@@ -37,6 +37,12 @@ public class Person extends UuidEntity
 // Getter/Setter Methods
 //----------------------------------------------------------------------------------------------------------------------
 
+    @Override
+    public void setId(String id)
+    {
+        super.setId(id);
+    }
+
     public String getFirst()
     {
         return first;

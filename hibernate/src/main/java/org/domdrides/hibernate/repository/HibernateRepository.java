@@ -142,7 +142,7 @@ public abstract class HibernateRepository<E extends Entity<I>, I extends Seriali
     @Transactional
     public E update(E entity)
     {
-        getSession().update(entity);
+        getSession().merge(entity);
         return entity;
     }
 

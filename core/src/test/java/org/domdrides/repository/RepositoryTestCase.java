@@ -144,6 +144,20 @@ public abstract class RepositoryTestCase extends AbstractTransactionalTestNGSpri
         assertNull(personRepository.getById(p.getId()));
     }
 
+
+    @Test
+    public void testRemoveDetached()
+    {
+        final Person p = new Person();
+        p.setId("foo");
+        personRepository.add(p);
+        final Person detached = new Person();
+        detached.setId("foo");
+        personRepository.remove(p);
+        assertNull(personRepository.getById(p.getId()));
+    }
+
+
     @Test
     public void testSize()
     {
@@ -160,6 +174,23 @@ public abstract class RepositoryTestCase extends AbstractTransactionalTestNGSpri
         p.setSsn("123-45-6789");
         personRepository.add(p);
 
+        p.setLast("Black");
+        personRepository.update(p);
+        final Person queried = personRepository.getById(p.getId());
+        assertEquals("Black", queried.getLast());
+    }
+
+    @Test
+    public void testUpdateDetached()
+    {
+        Person p = new Person();
+        p.setId("foo");
+        p.setFirst("Slappy");
+        p.setLast("White");
+        p.setSsn("123-45-6789");
+        personRepository.add(p);
+        p = new Person();
+        p.setId("foo");
         p.setLast("Black");
         personRepository.update(p);
         final Person queried = personRepository.getById(p.getId());
