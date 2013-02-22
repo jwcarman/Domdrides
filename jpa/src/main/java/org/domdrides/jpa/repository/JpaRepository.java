@@ -18,8 +18,6 @@ package org.domdrides.jpa.repository;
 
 import org.domdrides.entity.Entity;
 import org.domdrides.repository.PageableRepository;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -29,7 +27,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Repository
 public abstract class JpaRepository<E extends Entity<I>, I extends Serializable> implements PageableRepository<E, I>
 {
 //----------------------------------------------------------------------------------------------------------------------
@@ -53,7 +50,6 @@ public abstract class JpaRepository<E extends Entity<I>, I extends Serializable>
 // PageableRepository Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
-    @Transactional(readOnly = true)
     @SuppressWarnings("unchecked")
     public List<E> list(final int first, final int max, final String sortProperty, final boolean ascending)
     {
@@ -68,47 +64,40 @@ public abstract class JpaRepository<E extends Entity<I>, I extends Serializable>
 // Repository Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
-    @Transactional
     public E add(E entity)
     {
         getEntityManager().persist(entity);
         return entity;
     }
 
-    @Transactional(readOnly = true)
     public boolean contains(E entity)
     {
         return getById(entity.getId()) != null;
     }
 
     @SuppressWarnings("unchecked")
-    @Transactional(readOnly = true)
     public Set<E> getAll()
     {
         final String jpaql = "select x from " + entityClass.getName() + " x";
         return queryForSet(jpaql);
     }
 
-    @Transactional(readOnly = true)
     public E getById(I id)
     {
         return getEntityManager().find(entityClass, id);
     }
 
-    @Transactional
     public void remove(E entity)
     {
         getEntityManager().remove(entity);
     }
 
-    @Transactional(readOnly = true)
     public int size()
     {
         List results = getEntityManager().createQuery("select count(*) from " + entityClass.getName()).getResultList();
         return ((Number) results.get(0)).intValue();
     }
 
-    @Transactional
     public E update(E entity)
     {
         return getEntityManager().merge(entity);
@@ -133,8 +122,7 @@ public abstract class JpaRepository<E extends Entity<I>, I extends Serializable>
 //----------------------------------------------------------------------------------------------------------------------
 
     @SuppressWarnings("unchecked")
-    @Transactional(readOnly = true)
-    private Set<E> queryForSet(String jpaql)
+    protected Set<E> queryForSet(String jpaql)
     {
         return new HashSet<E>(getEntityManager().createQuery(jpaql).getResultList());
     }

@@ -52,7 +52,7 @@ public class HibernatePersonRepository extends HibernateRepository<Person, Strin
     @Transactional(readOnly = true)
     public List<Person> getAllAsListByQuery()
     {
-        final Query q = getSession(false).createQuery("select x from Person x");
+        final Query q = getSession().createQuery("select x from Person x");
         return list(q);
     }
 
@@ -66,14 +66,14 @@ public class HibernatePersonRepository extends HibernateRepository<Person, Strin
     @Transactional(readOnly = true)
     public Set<Person> getAllAsSetByQuery()
     {
-        final Query q = getSession(false).createQuery("select x from Person x");
+        final Query q = getSession().createQuery("select x from Person x");
         return set(q);
     }
 
     @Transactional(readOnly = true)
     public Person getByIdUsingQuery(String id)
     {
-        final Query q = getSession(false).createQuery("select x from Person x where x.id = :id");
+        final Query q = getSession().createQuery("select x from Person x where x.id = :id");
         q.setString("id", id);
         return uniqueResult(q);
     }

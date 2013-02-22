@@ -20,12 +20,11 @@ import org.domdrides.entity.Entity;
 import org.domdrides.repository.PageableRepository;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.SessionFactory;
+import org.hibernate.classic.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -39,8 +38,7 @@ import java.util.Set;
  * @author James Carman
  * @since 1.0
  */
-@Repository
-public abstract class HibernateRepository<E extends Entity<I>, I extends Serializable> extends HibernateDaoSupport implements PageableRepository<E, I>
+public abstract class HibernateRepository<E extends Entity<I>, I extends Serializable> implements PageableRepository<E, I>
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
@@ -49,6 +47,8 @@ public abstract class HibernateRepository<E extends Entity<I>, I extends Seriali
     public static final String UNCHECKED = "unchecked";
     private static final String ASSOCIATION_ALIAS = "sp";
     private final Class<E> entityClass;
+
+    private SessionFactory sessionFactory;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
@@ -77,7 +77,6 @@ public abstract class HibernateRepository<E extends Entity<I>, I extends Seriali
      * @param ascending    whether or not the sorting is asceding
      * @return one page of data from this repository
      */
-    @Transactional(readOnly = true)
     public List<E> list(int first, int max, String sortProperty, boolean ascending)
     {
         Criteria c = createCriteria()
@@ -102,48 +101,55 @@ public abstract class HibernateRepository<E extends Entity<I>, I extends Seriali
 // Repository Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
-    @Transactional()
     public E add(E entity)
     {
         getSession().save(entity);
         return entity;
     }
 
-    @Transactional(readOnly = true)
     public boolean contains(E entity)
     {
-        return getSession(false).get(entityClass, entity.getId()) != null;
+        return getSession().get(entityClass, entity.getId()) != null;
     }
 
-    @Transactional(readOnly = true)
+    protected Session getSession()
+    {
+        return sessionFactory.getCurrentSession();
+    }
+
     public Set<E> getAll()
     {
         return set(createCriteria());
     }
 
-    @Transactional(readOnly = true)
     public E getById(I id)
     {
         return uniqueResult(createCriteria().add(Restrictions.eq("id", id)));
     }
 
-    @Transactional
     public void remove(E entity)
     {
         getSession().delete(entity);
     }
 
-    @Transactional(readOnly = true)
     public int size()
     {
         return ((Number) createCriteria().setProjection(Projections.count("id")).uniqueResult()).intValue();
     }
 
-    @Transactional
     public E update(E entity)
     {
         getSession().merge(entity);
         return entity;
+    }
+
+//----------------------------------------------------------------------------------------------------------------------
+// Getter/Setter Methods
+//----------------------------------------------------------------------------------------------------------------------
+
+    public void setSessionFactory(SessionFactory sessionFactory)
+    {
+        this.sessionFactory = sessionFactory;
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -167,7 +173,6 @@ public abstract class HibernateRepository<E extends Entity<I>, I extends Seriali
      * @return a list of entities based on the provided criteria
      */
     @SuppressWarnings(UNCHECKED)
-    @Transactional(readOnly = true)
     protected List<E> list(Criteria criteria)
     {
         return new ArrayList<E>(criteria.list());
@@ -180,7 +185,6 @@ public abstract class HibernateRepository<E extends Entity<I>, I extends Seriali
      * @return a list of entities based on the provided query
      */
     @SuppressWarnings(UNCHECKED)
-    @Transactional(readOnly = true)
     protected List<E> list(Query query)
     {
         return new ArrayList<E>(query.list());
@@ -193,7 +197,6 @@ public abstract class HibernateRepository<E extends Entity<I>, I extends Seriali
      * @return a set of entities based on the provided criteria
      */
     @SuppressWarnings(UNCHECKED)
-    @Transactional(readOnly = true)
     protected Set<E> set(Criteria criteria)
     {
         return new HashSet<E>(criteria.list());
@@ -206,7 +209,6 @@ public abstract class HibernateRepository<E extends Entity<I>, I extends Seriali
      * @return a set of entities based on the provided query
      */
     @SuppressWarnings(UNCHECKED)
-    @Transactional(readOnly = true)
     protected Set<E> set(Query query)
     {
         return new HashSet<E>(query.list());
@@ -218,7 +220,6 @@ public abstract class HibernateRepository<E extends Entity<I>, I extends Seriali
      * @param criteria the criteria
      * @return a unique result based on the provided criteria
      */
-    @Transactional(readOnly = true)
     protected E uniqueResult(Criteria criteria)
     {
         return entityClass.cast(criteria.uniqueResult());
@@ -230,7 +231,6 @@ public abstract class HibernateRepository<E extends Entity<I>, I extends Seriali
      * @param query the query
      * @return a unique result based on the provided query
      */
-    @Transactional(readOnly = true)
     protected E uniqueResult(Query query)
     {
         return entityClass.cast(query.uniqueResult());
