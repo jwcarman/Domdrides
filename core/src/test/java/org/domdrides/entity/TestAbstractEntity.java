@@ -75,14 +75,7 @@ public class TestAbstractEntity
         assertEquals(m.getId(), "12345");
     }
 
-    @Test
-    public void testDefaultConstructor()
-    {
-        SimpleEntity entity = new SimpleEntity();
-        assertNull(entity.getId());
-    }
-
-    private static class SimpleEntity extends AbstractEntity<String>
+    private static class SimpleEntity extends UuidEntity
     {
         @Override
         public void setId(String id)

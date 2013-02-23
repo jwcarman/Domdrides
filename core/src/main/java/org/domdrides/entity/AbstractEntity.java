@@ -20,7 +20,7 @@ import java.io.Serializable;
 
 /**
  * A useful superclass for implementing persistent entity classes.  The {@link #equals(Object)} and {@link #hashCode()}
- * methods are based solely on the id value and not upon any "business" properties.
+ * methods are based solely on the getId() value and not upon any "business" properties.
  *
  * @author James Carman
  * @since 1.0
@@ -32,45 +32,11 @@ public abstract class AbstractEntity<I extends Serializable> implements Entity<I
 //----------------------------------------------------------------------------------------------------------------------
 
     private static final long serialVersionUID = -4570499400476247966L;
-    private I id;
 
-//----------------------------------------------------------------------------------------------------------------------
-// Constructors
-//----------------------------------------------------------------------------------------------------------------------
-
-    public AbstractEntity()
-    {
-    }
-
-    protected AbstractEntity(I id)
-    {
-        this.id = id;
-    }
-
-//----------------------------------------------------------------------------------------------------------------------
-// Entity Implementation
-//----------------------------------------------------------------------------------------------------------------------
-
-
-
-    public I getId()
-    {
-        return id;
-    }
-
-//----------------------------------------------------------------------------------------------------------------------
-// Getter/Setter Methods
-//----------------------------------------------------------------------------------------------------------------------
-
-    protected void setId(I id)
-    {
-        this.id = id;
-    }
 
 //----------------------------------------------------------------------------------------------------------------------
 // Canonical Methods
 //----------------------------------------------------------------------------------------------------------------------
-
 
     @Override
     public boolean equals(Object o)
@@ -86,12 +52,12 @@ public abstract class AbstractEntity<I extends Serializable> implements Entity<I
 
         AbstractEntity that = (AbstractEntity) o;
 
-        return !(id != null ? !id.equals(that.id) : that.id != null);
+        return !(getId() != null ? !getId().equals(that.getId()) : that.getId() != null);
     }
 
     @Override
     public int hashCode()
     {
-        return id != null ? id.hashCode() : 0;
+        return getId() != null ? getId().hashCode() : 0;
     }
 }
