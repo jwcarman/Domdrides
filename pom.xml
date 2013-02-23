@@ -25,21 +25,19 @@
         <module>core</module>
         <module>hibernate</module>
         <module>jpa</module>
-        <module>ibatis</module>
         <module>mybatis</module>
     </modules>
     <properties>
-        <hibernate.version>3.3.2.GA</hibernate.version>
+        <hibernate.jpa.version>4.1.10.Final</hibernate.jpa.version>
+        <hibernate.version>3.6.10.Final</hibernate.version>
         <spring.version>3.2.1.RELEASE</spring.version>
-        <ibatis.version>2.3.0</ibatis.version>
         <log4j.version>1.2.12</log4j.version>
-        <!-- mybatis-spring 1.1.1 implies 3.1.1 of mybatis -->
         <mybatis-spring.version>1.1.1</mybatis-spring.version>
-        <slf4j.version>1.5.8</slf4j.version>
+        <slf4j.version>1.6.6</slf4j.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <maven.compiler.source>1.5</maven.compiler.source>
-        <maven.compiler.target>1.5</maven.compiler.target>
+        <maven.compiler.source>1.6</maven.compiler.source>
+        <maven.compiler.target>1.6</maven.compiler.target>
     </properties>
     <developers>
         <developer>
@@ -59,11 +57,22 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>5.7</version>
             <scope>test</scope>
             <classifier>jdk15</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
